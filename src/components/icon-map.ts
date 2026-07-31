@@ -1,0 +1,30 @@
+import {
+  Boxes,
+  BrainCircuit,
+  Facebook,
+  Handshake,
+  LineChart,
+  Linkedin,
+  Radar,
+  ShieldCheck,
+  Sparkles,
+  Twitter,
+  Users,
+  Youtube,
+  type LucideIcon,
+} from "lucide-react";
+
+export const ICONS: Record<string, LucideIcon> = {
+  Boxes,
+  BrainCircuit,
+  Facebook,
+  Handshake,
+  LineChart,
+  Linkedin,
+  Radar,
+  ShieldCheck,
+  Sparkles,
+  Twitter,
+  Users,
+  Youtube,
+};
