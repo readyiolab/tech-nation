@@ -26,26 +26,28 @@ export function Footer() {
   const [message, setMessage] = useState("");
 
   return (
-    <footer className="relative mt-24 overflow-hidden border-t border-border bg-surface">
-      <div className="bg-halo pointer-events-none absolute inset-x-0 top-0 h-72" aria-hidden="true" />
+    <footer className="relative mt-28 pt-20 overflow-hidden border-t border-border bg-surface">
+      <div className="bg-halo pointer-events-none absolute inset-x-0 top-0 h-80" aria-hidden="true" />
+      <div className="noise-overlay opacity-[0.04]" aria-hidden="true" />
 
       <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
         {/* Newsletter band */}
-        <div className="-mt-14 overflow-hidden rounded-[2rem] bg-ink px-6 py-12 text-ink-foreground shadow-lift sm:px-12 sm:py-14">
+        <div className="-mt-16 overflow-hidden rounded-[2.25rem] bg-ink px-6 py-12 text-ink-foreground shadow-lift ring-1 ring-white/10 sm:px-12 sm:py-16">
           <div className="relative grid gap-10 lg:grid-cols-[1.05fr_1fr] lg:items-center">
             <div
-              className="bg-mesh pointer-events-none absolute inset-0 opacity-30"
+              className="bg-mesh pointer-events-none absolute inset-0 opacity-40"
               aria-hidden="true"
             />
+            <div className="glow-orb -left-16 top-0 h-56 w-56 opacity-30" aria-hidden="true" />
             <div className="relative">
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-[0.65rem] font-semibold tracking-[0.18em] uppercase">
-                <Sparkles className="h-3.5 w-3.5" />
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[0.65rem] font-semibold tracking-[0.18em] uppercase backdrop-blur">
+               
                 Newsletter
               </span>
-              <h2 className="font-display mt-5 text-2xl leading-tight font-semibold text-balance sm:text-3xl">
+              <h2 className="display-title mt-5 text-2xl text-balance sm:text-3xl md:text-4xl">
                 Get the practitioner's brief, once a month.
               </h2>
-              <p className="mt-3 max-w-md text-sm leading-relaxed opacity-75">
+              <p className="mt-3 max-w-md text-sm leading-relaxed opacity-75 sm:text-base">
                 Lab drops, cohort openings and field notes on AI and cyber. No noise, unsubscribe
                 any time.
               </p>

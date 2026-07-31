@@ -25,7 +25,7 @@ type BlogPost = {
 
 type BlogResponse = { success: boolean; data: BlogPost };
 
-const SITE_URL = import.meta.env.VITE_SITE_URL || "https://onetechnations.com";
+const SITE_URL = import.meta.env.VITE_SITE_URL || "https://onetechnation.com";
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ params }) => {
@@ -95,14 +95,16 @@ function BlogPostPage() {
   };
 
   return (
-    <article className="mx-auto w-full max-w-3xl px-4 py-16 sm:px-6 sm:py-24">
+    <article className="relative overflow-hidden">
+      <div className="bg-mesh pointer-events-none absolute inset-x-0 top-0 h-[28rem] opacity-60" aria-hidden="true" />
+      <div className="relative mx-auto w-full max-w-3xl px-4 py-16 sm:px-6 sm:py-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
       <Link
         to="/blog"
-        className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
+        className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/70 px-3.5 py-1.5 text-sm text-muted-foreground shadow-soft backdrop-blur transition-colors hover:text-primary"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to blog
@@ -114,7 +116,7 @@ function BlogPostPage() {
         </span>
       ) : null}
 
-      <h1 className="mt-5 font-display text-4xl leading-tight font-semibold text-balance sm:text-5xl">
+      <h1 className="display-title mt-5 text-4xl text-balance sm:text-5xl">
         {post.title}
       </h1>
 
@@ -128,23 +130,27 @@ function BlogPostPage() {
       </div>
 
       {post.cover_image_url ? (
-        <img
-          src={post.cover_image_url}
-          alt={post.cover_image_alt || post.title}
-          className="mt-10 w-full rounded-[1.5rem] border border-border object-cover"
-          width={1200}
-          height={675}
-        />
+        <div className="relative mt-10 overflow-hidden rounded-[1.75rem] border border-border/80 shadow-lift">
+          <img
+            src={post.cover_image_url}
+            alt={post.cover_image_alt || post.title}
+            className="w-full object-cover"
+            width={1200}
+            height={675}
+          />
+          <span className="media-mask pointer-events-none absolute inset-0" aria-hidden="true" />
+        </div>
       ) : null}
 
       {post.excerpt ? (
-        <p className="mt-8 text-lg leading-relaxed text-muted-foreground">{post.excerpt}</p>
+        <p className="mt-8 text-lg leading-relaxed text-muted-foreground sm:text-xl">{post.excerpt}</p>
       ) : null}
 
       <div
         className="blog-prose mt-10"
         dangerouslySetInnerHTML={{ __html: post.content_html }}
       />
+      </div>
     </article>
   );
 }

@@ -86,8 +86,8 @@ function Blog() {
 
         {featured ? (
           <Reveal>
-            <article className="group grid overflow-hidden rounded-[2rem] border border-border bg-card lg:grid-cols-2">
-              <div className="relative aspect-[16/10] overflow-hidden bg-surface-2 lg:aspect-auto">
+            <article className="group grid overflow-hidden rounded-[2.25rem] border border-border/80 bg-card shadow-lift lg:grid-cols-2">
+              <div className="relative aspect-[16/10] overflow-hidden bg-surface-2 lg:aspect-auto lg:min-h-[22rem]">
                 {featured.cover_image_url ? (
                   <img
                     src={featured.cover_image_url}
@@ -100,6 +100,10 @@ function Blog() {
                 ) : (
                   <div className="h-full min-h-[16rem] w-full bg-[image:var(--gradient-brand)] opacity-80" />
                 )}
+                <span className="media-mask pointer-events-none absolute inset-0" aria-hidden="true" />
+                <span className="absolute top-4 left-4 rounded-full bg-card/95 px-3 py-1 text-[0.65rem] font-semibold tracking-[0.14em] text-primary uppercase shadow-soft backdrop-blur">
+                  Featured
+                </span>
               </div>
               <div className="flex flex-col justify-center p-8 sm:p-12">
                 {featured.category ? (
@@ -107,10 +111,10 @@ function Blog() {
                     {featured.category}
                   </span>
                 ) : null}
-                <h2 className="mt-5 font-display text-3xl leading-tight font-semibold text-balance">
+                <h2 className="display-title mt-5 text-3xl text-balance sm:text-4xl">
                   {featured.title}
                 </h2>
-                <p className="mt-4 leading-relaxed text-muted-foreground">{featured.excerpt}</p>
+                <p className="mt-4 leading-relaxed text-muted-foreground sm:text-lg">{featured.excerpt}</p>
                 <div className="mt-6 flex items-center gap-4 text-xs text-muted-foreground">
                   <span>{formatDate(featured.published_at)}</span>
                   <span className="flex items-center gap-1.5">
@@ -118,7 +122,7 @@ function Blog() {
                     {featured.read_time_minutes || 5} min read
                   </span>
                 </div>
-                <Button asChild variant="hero" className="mt-8 self-start">
+                <Button asChild variant="hero" className="mt-8 self-start rounded-full">
                   <Link to="/blog/$slug" params={{ slug: featured.slug }}>
                     Read more
                     <ArrowUpRight />
@@ -132,30 +136,42 @@ function Blog() {
         <div className="mt-8 grid gap-5 md:grid-cols-3">
           {rest.map((p, i) => (
             <Reveal key={p.slug} delay={i * 80}>
-              <article className="lift-hover group flex h-full flex-col rounded-3xl border border-border bg-card p-7">
+              <article className="lift-hover group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-border/80 bg-card shadow-soft">
+                {p.cover_image_url ? (
+                  <div className="relative aspect-[16/10] overflow-hidden bg-surface-2">
+                    <img
+                      src={p.cover_image_url}
+                      alt={p.cover_image_alt || p.title}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+                ) : null}
+                <div className="flex flex-1 flex-col p-7">
                 {p.category ? (
                   <span className="w-fit rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-foreground">
                     {p.category}
                   </span>
                 ) : null}
-                <h2 className="mt-4 font-display text-xl leading-snug font-semibold transition-colors group-hover:text-primary">
+                <h2 className="mt-4 font-display text-xl leading-snug font-semibold tracking-tight transition-colors group-hover:text-primary">
                   {p.title}
                 </h2>
                 <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
                   {p.excerpt}
                 </p>
-                <div className="mt-6 flex items-center justify-between border-t border-border pt-4 text-xs text-muted-foreground">
+                <div className="mt-6 flex items-center justify-between border-t border-border/80 pt-4 text-xs text-muted-foreground">
                   <span>
                     {formatDate(p.published_at)} · {p.read_time_minutes || 5} min read
                   </span>
                   <Link
                     to="/blog/$slug"
                     params={{ slug: p.slug }}
-                    className="inline-flex items-center gap-1 font-medium text-primary"
+                    className="inline-flex items-center gap-1 font-semibold text-primary"
                   >
                     Read more
                     <ArrowUpRight className="h-3.5 w-3.5" />
                   </Link>
+                </div>
                 </div>
               </article>
             </Reveal>

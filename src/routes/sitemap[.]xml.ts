@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { CORE_SERVICES } from "@/data/site";
 
-const BASE_URL = import.meta.env.VITE_SITE_URL || "https://onetechnations.com";
+const BASE_URL = import.meta.env.VITE_SITE_URL || "https://onetechnation.com";
 const API_BASE =
   import.meta.env.VITE_API_BASE_URL ||
   (typeof window === "undefined" ? "http://127.0.0.1:5000" : "");

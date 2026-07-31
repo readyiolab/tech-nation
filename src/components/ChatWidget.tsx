@@ -100,7 +100,7 @@ export function ChatWidget() {
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Close assistant" : "Open assistant"}
         className={cn(
-          "fixed right-4 bottom-4 z-50 grid h-14 w-14 place-items-center rounded-full bg-[image:var(--gradient-brand)] text-primary-foreground shadow-[var(--shadow-glow)] transition-transform duration-300 hover:scale-105 sm:right-6 sm:bottom-6",
+          "fixed right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-50 grid h-14 w-14 place-items-center rounded-full bg-[image:var(--gradient-brand)] text-primary-foreground shadow-[var(--shadow-glow)] ring-4 ring-primary/15 transition-transform duration-300 hover:scale-105 sm:right-6 sm:bottom-6",
           !open && "animate-pulse-ring",
         )}
       >
@@ -108,14 +108,18 @@ export function ChatWidget() {
       </button>
 
       {open ? (
-        <div className="animate-rise fixed right-4 bottom-22 z-50 flex h-[30rem] w-[min(22rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-lift sm:right-6 sm:bottom-24">
-          <div className="flex items-center gap-3 border-b border-border bg-[image:var(--gradient-brand)] px-4 py-3.5 text-primary-foreground">
-            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-card/20">
+        <div className="animate-rise fixed right-4 bottom-[calc(4.5rem+env(safe-area-inset-bottom))] z-50 flex h-[min(30rem,calc(100dvh-8.5rem))] w-[min(22rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-[1.75rem] border border-border/80 bg-card shadow-lift ring-1 ring-primary/10 sm:right-6 sm:bottom-24 sm:h-[30rem]">
+          <div className="relative flex items-center gap-3 overflow-hidden border-b border-white/10 bg-[image:var(--gradient-brand)] px-4 py-3.5 text-primary-foreground">
+            <div className="noise-overlay opacity-20 mix-blend-soft-light" aria-hidden="true" />
+            <span className="relative grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white/15 ring-1 ring-white/25 backdrop-blur">
               <Sparkles className="h-4.5 w-4.5" />
             </span>
-            <div className="min-w-0">
+            <div className="relative min-w-0">
               <p className="truncate font-display text-sm font-semibold">Nova Assistant</p>
-              <p className="text-xs opacity-80">Typically replies instantly</p>
+              <p className="flex items-center gap-1.5 text-xs opacity-85">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-300" />
+                Typically replies instantly
+              </p>
             </div>
           </div>
 

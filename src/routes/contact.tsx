@@ -132,12 +132,12 @@ function Contact() {
                 {c.href ? (
                   <a
                     href={c.href}
-                    className="lift-hover group flex h-full flex-col rounded-3xl border border-border bg-card p-7"
+                    className="lift-hover group flex h-full flex-col rounded-[1.75rem] border border-border/80 bg-card p-7 shadow-soft"
                   >
                     {inner}
                   </a>
                 ) : (
-                  <div className="lift-hover group flex h-full flex-col rounded-3xl border border-border bg-card p-7">
+                  <div className="lift-hover group flex h-full flex-col rounded-[1.75rem] border border-border/80 bg-card p-7 shadow-soft">
                     {inner}
                   </div>
                 )}
@@ -150,11 +150,12 @@ function Contact() {
       {/* AI ASSISTANT ENTRY */}
       <section className="mx-auto mt-14 w-full max-w-7xl px-4 sm:px-6">
         <Reveal>
-          <div className="relative overflow-hidden rounded-[2rem] border border-border bg-card p-7 shadow-soft sm:p-9">
-            <div className="bg-mesh pointer-events-none absolute inset-0 opacity-60" aria-hidden="true" />
+          <div className="glass-panel relative overflow-hidden rounded-[2rem] p-7 shadow-lift sm:p-9">
+            <div className="bg-mesh pointer-events-none absolute inset-0 opacity-70" aria-hidden="true" />
+            <div className="glow-orb -right-10 top-0 h-48 w-48 opacity-30" aria-hidden="true" />
             <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex gap-4">
-                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-[image:var(--gradient-brand)] text-primary-foreground">
+                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-[image:var(--gradient-brand)] text-primary-foreground shadow-soft">
                   <MessagesSquare className="h-5 w-5" />
                 </span>
                 <div>
@@ -220,15 +221,15 @@ function Contact() {
                   setSending(false);
                 }
               }}
-              className="relative overflow-hidden rounded-[2rem] border border-border bg-card p-8 shadow-soft sm:p-10"
+              className="glass-panel relative overflow-hidden rounded-[2rem] p-8 shadow-lift sm:p-10"
             >
               <div
-                className="bg-mesh pointer-events-none absolute inset-x-0 top-0 h-48 opacity-60"
+                className="bg-mesh pointer-events-none absolute inset-x-0 top-0 h-48 opacity-70"
                 aria-hidden="true"
               />
               <div className="relative">
                 <Eyebrow>Send a message</Eyebrow>
-                <h2 className="mt-5 font-display text-2xl font-semibold sm:text-3xl">
+                <h2 className="display-title mt-5 text-2xl sm:text-3xl">
                   Tell us about your challenge
                 </h2>
                 <p className="mt-2 text-sm text-muted-foreground">
@@ -314,7 +315,7 @@ function Contact() {
 
           <Reveal delay={100}>
             <div className="flex h-full flex-col gap-6">
-              <div className="overflow-hidden rounded-[2rem] border border-border bg-card shadow-soft">
+              <div className="overflow-hidden rounded-[2rem] border border-border/80 bg-card shadow-lift">
                 <img
                   src={contactVisual}
                   alt="Illustration of message bubbles, an envelope and a map pin"
@@ -325,7 +326,7 @@ function Contact() {
                 />
               </div>
 
-              <div className="rounded-[2rem] border border-border bg-card p-8">
+              <div className="rounded-[2rem] border border-border/80 bg-card p-8 shadow-soft">
                 <h3 className="font-display text-lg font-semibold">What happens next</h3>
                 <ul className="mt-5 grid gap-3">
                   {EXPECTATIONS.map((e) => (
@@ -339,8 +340,9 @@ function Contact() {
                 </ul>
               </div>
 
-              <div className="relative flex-1 overflow-hidden rounded-[2rem] bg-ink p-8 text-ink-foreground">
-                <div className="bg-mesh pointer-events-none absolute inset-0 opacity-30" aria-hidden="true" />
+              <div className="relative flex-1 overflow-hidden rounded-[2rem] bg-ink p-8 text-ink-foreground shadow-lift ring-1 ring-white/10">
+                <div className="bg-mesh pointer-events-none absolute inset-0 opacity-40" aria-hidden="true" />
+                <div className="glow-orb -right-6 -bottom-6 h-36 w-36 opacity-40" aria-hidden="true" />
                 <div className="relative flex h-full flex-col">
                   <span className="grid h-11 w-11 place-items-center rounded-2xl bg-white/10">
                     <MessagesSquare className="h-5 w-5" />

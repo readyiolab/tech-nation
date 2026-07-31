@@ -17,7 +17,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline rounded-md",
         hero: "bg-[image:var(--gradient-brand)] text-primary-foreground shadow-[var(--shadow-glow)] hover:-translate-y-0.5 hover:brightness-110",
-        warm: "bg-[image:var(--gradient-warm)] text-amber-foreground shadow-soft hover:-translate-y-0.5 hover:brightness-105",
+        warm: "bg-[image:var(--gradient-warm)] text-primary-foreground shadow-soft hover:-translate-y-0.5 hover:brightness-105",
         ink: "bg-ink text-ink-foreground hover:bg-ink/90 hover:-translate-y-0.5",
       },
       size: {

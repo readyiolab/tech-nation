@@ -50,7 +50,7 @@ function ServiceDetail() {
     <>
       <PageHero
         eyebrow="Service details"
-        title={service.title}
+        title={<span className="text-balance">{service.title}</span>}
         subtitle={service.summary}
         crumb={service.title}
       />
@@ -59,11 +59,13 @@ function ServiceDetail() {
         <div className="grid gap-10 lg:grid-cols-[1.6fr_1fr]">
           <div className="flex flex-col gap-10">
             <Reveal>
-              <div className="rounded-[2rem] border border-border bg-card p-8 sm:p-10">
-                <span className="grid h-14 w-14 place-items-center rounded-2xl bg-[image:var(--gradient-brand)] text-primary-foreground">
+              <div className="glass-panel relative overflow-hidden rounded-[2rem] p-8 shadow-lift sm:p-10">
+                <div className="bg-mesh pointer-events-none absolute inset-0 opacity-50" aria-hidden="true" />
+                <div className="relative">
+                <span className="grid h-14 w-14 place-items-center rounded-2xl bg-[image:var(--gradient-brand)] text-primary-foreground shadow-lift">
                   <Icon className="h-7 w-7" />
                 </span>
-                <h2 className="mt-6 font-display text-2xl font-semibold">
+                <h2 className="display-title mt-6 text-2xl sm:text-3xl">
                   What this service covers
                 </h2>
                 <p className="mt-4 leading-relaxed text-muted-foreground">{service.body}</p>
@@ -76,13 +78,14 @@ function ServiceDetail() {
                   {BENEFITS.map((b) => (
                     <li
                       key={b}
-                      className="flex items-start gap-2.5 rounded-2xl bg-surface px-4 py-3.5 text-sm"
+                      className="flex items-start gap-2.5 rounded-2xl border border-border/60 bg-background/70 px-4 py-3.5 text-sm shadow-soft backdrop-blur"
                     >
                       <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-teal" />
                       <span className="text-muted-foreground">{b}</span>
                     </li>
                   ))}
                 </ul>
+                </div>
               </div>
             </Reveal>
 
@@ -111,7 +114,7 @@ function ServiceDetail() {
 
           <aside className="flex flex-col gap-6 lg:sticky lg:top-28 lg:self-start">
             <Reveal delay={60}>
-              <nav className="rounded-[2rem] border border-border bg-card p-6">
+              <nav className="rounded-[2rem] border border-border/80 bg-card p-6 shadow-soft">
                 <h2 className="font-display text-lg font-semibold">List of services</h2>
                 <ul className="mt-4 space-y-1.5">
                   {CORE_SERVICES.map((s) => {
@@ -121,9 +124,9 @@ function ServiceDetail() {
                         <Link
                           to="/services/$slug"
                           params={{ slug: s.slug }}
-                          className={`flex items-center justify-between gap-3 rounded-xl px-4 py-3 text-sm transition-colors ${
+                          className={`flex items-center justify-between gap-3 rounded-xl px-4 py-3 text-sm transition-all duration-300 ${
                             active
-                              ? "bg-[image:var(--gradient-brand)] text-primary-foreground"
+                              ? "bg-[image:var(--gradient-brand)] text-primary-foreground shadow-soft"
                               : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                           }`}
                         >
@@ -138,11 +141,12 @@ function ServiceDetail() {
             </Reveal>
 
             <Reveal delay={140}>
-              <div className="relative overflow-hidden rounded-[2rem] bg-ink p-8 text-ink-foreground">
+              <div className="relative overflow-hidden rounded-[2rem] bg-ink p-8 text-ink-foreground shadow-lift ring-1 ring-white/10">
                 <div
-                  className="bg-mesh pointer-events-none absolute inset-0 opacity-30"
+                  className="bg-mesh pointer-events-none absolute inset-0 opacity-40"
                   aria-hidden="true"
                 />
+                <div className="glow-orb -right-8 -top-8 h-40 w-40 opacity-40" aria-hidden="true" />
                 <div className="relative">
                   <h2 className="font-display text-xl leading-snug font-semibold">
                     Ready to elevate your business?
@@ -151,7 +155,7 @@ function ServiceDetail() {
                     We're dedicated to providing excellent services. Tell us your challenge and
                     we'll scope it with you.
                   </p>
-                  <Button asChild variant="warm" className="mt-6 w-full">
+                  <Button asChild variant="warm" className="mt-6 w-full rounded-full">
                     <Link to="/contact">
                       Get in touch
                       <ArrowRight />
@@ -174,7 +178,7 @@ function ServiceDetail() {
                     key={s.slug}
                     to="/services/$slug"
                     params={{ slug: s.slug }}
-                    className="lift-hover group rounded-3xl border border-border bg-card p-7"
+                    className="lift-hover group rounded-[1.75rem] border border-border/80 bg-card p-7 shadow-soft"
                   >
                     <span className="grid h-11 w-11 place-items-center rounded-2xl bg-accent text-primary">
                       <OtherIcon className="h-5 w-5" />

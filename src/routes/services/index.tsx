@@ -88,17 +88,18 @@ function Services() {
       {/* METRICS / COUNTERS */}
       <section className="mx-auto w-full max-w-7xl px-4 sm:px-6">
         <Reveal>
-          <dl className="grid gap-px overflow-hidden rounded-[2rem] border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+          <dl className="relative grid gap-px overflow-hidden rounded-[2.25rem] border border-white/10 bg-ink text-ink-foreground shadow-lift sm:grid-cols-2 lg:grid-cols-4">
+            <div className="bg-mesh pointer-events-none absolute inset-0 opacity-35" aria-hidden="true" />
             {METRICS.map((m) => (
-              <div key={m.label} className="group bg-card px-6 py-9 transition-colors hover:bg-surface">
-                <dt className="font-display text-4xl font-semibold sm:text-5xl">
-                  <span className="text-gradient">
+              <div key={m.label} className="relative bg-ink/80 px-6 py-10 backdrop-blur transition-colors hover:bg-ink/60">
+                <dt className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">
+                  <span className="text-white">
                     <Counter value={m.value} suffix={m.suffix} />
                   </span>
                 </dt>
                 <dd className="mt-3">
                   <span className="block text-sm font-medium">{m.label}</span>
-                  <span className="mt-1 block text-xs text-muted-foreground">{m.hint}</span>
+                  <span className="mt-1 block text-xs opacity-70">{m.hint}</span>
                 </dd>
               </div>
             ))}
@@ -130,7 +131,7 @@ function Services() {
                       className="bg-halo pointer-events-none absolute -inset-8 opacity-70"
                       aria-hidden="true"
                     />
-                    <div className="relative overflow-hidden rounded-[2rem] border border-border bg-card shadow-soft transition-shadow duration-500 group-hover:shadow-lift">
+                    <div className="relative overflow-hidden rounded-[2rem] border border-border/80 bg-card shadow-lift transition-shadow duration-500 group-hover:shadow-lift">
                       <img
                         src={STORY_IMAGES[s.image]}
                         alt={`${s.title} illustration`}
@@ -139,8 +140,9 @@ function Services() {
                         height={912}
                         className="w-full object-cover transition-transform duration-[900ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
                       />
+                      <span className="media-mask pointer-events-none absolute inset-0" aria-hidden="true" />
                     </div>
-                    <span className="glass-card absolute -bottom-5 left-6 flex items-center gap-2 rounded-full px-4 py-2.5 text-xs font-semibold tracking-[0.12em] uppercase">
+                    <span className="glass-panel absolute -bottom-5 left-6 flex items-center gap-2 rounded-full px-4 py-2.5 text-xs font-semibold tracking-[0.12em] uppercase shadow-soft">
                       <Sparkles className="h-3.5 w-3.5 text-primary" />
                       {s.kicker}
                     </span>
@@ -150,7 +152,7 @@ function Services() {
                 <Reveal delay={110} className={flip ? "lg:order-1" : undefined}>
                   <div className="flex flex-col items-start gap-5">
                     <Eyebrow>{s.kicker}</Eyebrow>
-                    <h3 className="max-w-xl text-3xl leading-[1.12] font-semibold text-balance sm:text-4xl">
+                    <h3 className="display-title max-w-xl text-3xl text-balance sm:text-4xl">
                       {s.title}
                     </h3>
                     <p className="max-w-xl leading-relaxed text-muted-foreground">{s.body}</p>
@@ -179,13 +181,18 @@ function Services() {
       </section>
 
       {/* FULL CATALOGUE */}
-      <section className="relative overflow-hidden bg-surface py-20 sm:py-28">
+      <section className="relative overflow-hidden bg-surface section-pad">
         <div className="bg-halo pointer-events-none absolute inset-0" aria-hidden="true" />
+        <div className="noise-overlay" aria-hidden="true" />
         <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
           <Reveal>
             <SectionHeading
               eyebrow="Full catalogue"
-              title="Every service we offer"
+              title={
+                <>
+                  Every service we <span className="text-gradient">offer</span>
+                </>
+              }
               subtitle="From training and labs to consulting, tech analysis and market research."
             />
           </Reveal>
@@ -197,7 +204,7 @@ function Services() {
                   <Link
                     to="/services/$slug"
                     params={{ slug: s.slug }}
-                    className="lift-hover group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card p-7"
+                    className="lift-hover group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-border/80 bg-card p-7 shadow-soft"
                   >
                     <span
                       className="bg-mesh pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-60"
@@ -206,11 +213,11 @@ function Services() {
                     <span className="relative grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-accent text-primary transition-colors duration-300 group-hover:bg-[image:var(--gradient-brand)] group-hover:text-primary-foreground">
                       <Icon className="h-6 w-6" />
                     </span>
-                    <h3 className="relative mt-6 font-display text-xl font-semibold">{s.title}</h3>
+                    <h3 className="relative mt-6 font-display text-xl font-semibold tracking-tight">{s.title}</h3>
                     <p className="relative mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
                       {s.summary}
                     </p>
-                    <span className="relative mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-primary">
+                    <span className="relative mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
                       Service details
                       <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </span>
@@ -239,8 +246,8 @@ function Services() {
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {PROCESS.map((p, i) => (
               <Reveal key={p.step} delay={i * 100}>
-                <div className="group relative flex h-full flex-col rounded-3xl border border-border bg-card p-7 transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/40 hover:shadow-lift">
-                  <span className="grid h-12 w-12 place-items-center rounded-full bg-[image:var(--gradient-brand)] font-display text-sm font-semibold text-primary-foreground">
+                <div className="group relative flex h-full flex-col rounded-[1.75rem] border border-border/80 bg-card p-7 shadow-soft transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/40 hover:shadow-lift">
+                  <span className="grid h-12 w-12 place-items-center rounded-full bg-[image:var(--gradient-brand)] font-display text-sm font-semibold text-primary-foreground shadow-soft">
                     {p.step}
                   </span>
                   <h3 className="mt-6 font-display text-lg font-semibold">{p.title}</h3>
@@ -265,8 +272,8 @@ function Services() {
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {REASONS.map((r, i) => (
               <Reveal key={r.no} delay={i * 80}>
-                <div className="lift-hover h-full rounded-3xl border border-border bg-card p-7">
-                  <span className="font-display text-3xl font-semibold text-primary/25">
+                <div className="lift-hover h-full rounded-[1.75rem] border border-border/80 bg-card p-7 shadow-soft">
+                  <span className="font-display text-3xl font-semibold text-primary/30">
                     {r.no}
                   </span>
                   <h3 className="mt-4 font-display text-lg font-semibold">{r.title}</h3>
@@ -335,10 +342,11 @@ function Services() {
       {/* CTA */}
       <section className="mx-auto w-full max-w-7xl px-4 pb-20 sm:px-6 sm:pb-28">
         <Reveal>
-          <div className="relative overflow-hidden rounded-[2rem] bg-ink px-6 py-16 text-center text-ink-foreground sm:px-12">
-            <div className="bg-mesh pointer-events-none absolute inset-0 opacity-30" aria-hidden="true" />
+          <div className="relative overflow-hidden rounded-[2.25rem] bg-ink px-6 py-16 text-center text-ink-foreground shadow-lift ring-1 ring-white/10 sm:px-12 sm:py-20">
+            <div className="bg-mesh pointer-events-none absolute inset-0 opacity-40" aria-hidden="true" />
+            <div className="glow-orb left-1/2 top-0 h-64 w-64 -translate-x-1/2 opacity-35" aria-hidden="true" />
             <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-6">
-              <h2 className="text-3xl leading-tight font-semibold text-balance sm:text-4xl">
+              <h2 className="display-title text-3xl text-balance sm:text-4xl">
                 Tell us where you are. We'll map the next step.
               </h2>
               <p className="opacity-80">

@@ -73,8 +73,9 @@ function About() {
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <Reveal>
             <div className="group relative">
+              <div className="glow-orb -left-8 top-8 h-56 w-56 opacity-30" aria-hidden="true" />
               <div className="bg-halo pointer-events-none absolute -inset-8 opacity-70" aria-hidden="true" />
-              <div className="relative overflow-hidden rounded-[2rem] border border-border shadow-soft">
+              <div className="relative overflow-hidden rounded-[2rem] border border-border/80 shadow-lift">
                 <img
                   src={aboutVisual}
                   alt="Abstract glass cubes connected by a network, representing collaborative technology"
@@ -83,13 +84,14 @@ function About() {
                   height={1008}
                   className="w-full object-cover transition-transform duration-[900ms] group-hover:scale-[1.04]"
                 />
+                <span className="media-mask pointer-events-none absolute inset-0" aria-hidden="true" />
               </div>
             </div>
           </Reveal>
           <Reveal delay={90}>
             <div className="flex flex-col gap-6">
               <Eyebrow>Welcome</Eyebrow>
-              <h2 className="text-3xl leading-[1.12] font-semibold text-balance sm:text-4xl">
+              <h2 className="display-title text-3xl text-balance sm:text-4xl">
                 Where students, veterans and builders learn side by side
               </h2>
               <p className="leading-relaxed text-muted-foreground">
@@ -122,17 +124,18 @@ function About() {
       {/* COUNTERS */}
       <section className="mx-auto w-full max-w-7xl px-4 sm:px-6">
         <Reveal>
-          <dl className="grid gap-px overflow-hidden rounded-[2rem] border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+          <dl className="relative grid gap-px overflow-hidden rounded-[2.25rem] border border-white/10 bg-ink text-ink-foreground shadow-lift sm:grid-cols-2 lg:grid-cols-4">
+            <div className="bg-mesh pointer-events-none absolute inset-0 opacity-35" aria-hidden="true" />
             {METRICS.map((m) => (
-              <div key={m.label} className="bg-card px-6 py-9 transition-colors hover:bg-surface">
-                <dt className="font-display text-4xl font-semibold sm:text-5xl">
-                  <span className="text-gradient">
+              <div key={m.label} className="relative bg-ink/80 px-6 py-10 backdrop-blur transition-colors hover:bg-ink/60">
+                <dt className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">
+                  <span className="text-white">
                     <Counter value={m.value} suffix={m.suffix} />
                   </span>
                 </dt>
                 <dd className="mt-3">
                   <span className="block text-sm font-medium">{m.label}</span>
-                  <span className="mt-1 block text-xs text-muted-foreground">{m.hint}</span>
+                  <span className="mt-1 block text-xs opacity-70">{m.hint}</span>
                 </dd>
               </div>
             ))}
@@ -146,12 +149,12 @@ function About() {
           <Reveal>
             <div className="flex flex-col gap-6">
               <Eyebrow>Mission & vision</Eyebrow>
-              <h2 className="text-3xl leading-[1.12] font-semibold text-balance sm:text-4xl">
+              <h2 className="display-title text-3xl text-balance sm:text-4xl">
                 Tech made easy — for everyone who shows up curious
               </h2>
               <div className="grid gap-5">
-                <div className="lift-hover flex gap-5 rounded-3xl border border-border bg-card p-7">
-                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-accent text-primary">
+                <div className="lift-hover flex gap-5 rounded-3xl border border-border/80 bg-card p-7 shadow-soft">
+                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-[image:var(--gradient-brand)] text-primary-foreground shadow-soft">
                     <Target className="h-6 w-6" />
                   </span>
                   <div className="min-w-0">
@@ -162,7 +165,7 @@ function About() {
                     </p>
                   </div>
                 </div>
-                <div className="lift-hover flex gap-5 rounded-3xl border border-border bg-card p-7">
+                <div className="lift-hover flex gap-5 rounded-3xl border border-border/80 bg-card p-7 shadow-soft">
                   <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-teal/15 text-teal-foreground">
                     <Eye className="h-6 w-6" />
                   </span>
@@ -197,13 +200,18 @@ function About() {
       </section>
 
       {/* VALUES */}
-      <section className="relative overflow-hidden bg-surface py-20 sm:py-28">
+      <section className="relative overflow-hidden bg-surface section-pad">
         <div className="bg-halo pointer-events-none absolute inset-0" aria-hidden="true" />
+        <div className="noise-overlay" aria-hidden="true" />
         <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
           <Reveal>
             <SectionHeading
               eyebrow="Our values"
-              title="Four things we refuse to compromise on"
+              title={
+                <>
+                  Four things we refuse to <span className="text-gradient">compromise</span> on
+                </>
+              }
               subtitle="They shape how we teach, how we consult and how we show up after go-live."
             />
           </Reveal>
@@ -212,11 +220,11 @@ function About() {
               const Icon = ICONS[v.icon];
               return (
                 <Reveal key={v.title} delay={i * 90}>
-                  <article className="lift-hover flex h-full flex-col rounded-3xl border border-border bg-card p-7">
-                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-accent text-primary">
+                  <article className="lift-hover flex h-full flex-col rounded-[1.75rem] border border-border/80 bg-card p-7 shadow-soft">
+                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-[image:var(--gradient-brand)] text-primary-foreground shadow-soft">
                       <Icon className="h-6 w-6" />
                     </span>
-                    <h3 className="mt-6 font-display text-lg font-semibold">{v.title}</h3>
+                    <h3 className="mt-6 font-display text-lg font-semibold tracking-tight">{v.title}</h3>
                     <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{v.body}</p>
                   </article>
                 </Reveal>
@@ -237,7 +245,7 @@ function About() {
                 title="From a study circle to a tech nation"
                 subtitle="Every milestone came from members asking for something harder."
               />
-              <div className="mt-8 overflow-hidden rounded-[2rem] border border-border shadow-soft">
+              <div className="mt-8 overflow-hidden rounded-[2rem] border border-border/80 shadow-lift">
                 <img
                   src={aboutCommunity}
                   alt="Illustration of a connected global community of practitioners"
@@ -250,18 +258,18 @@ function About() {
             </div>
           </Reveal>
           <Reveal delay={90}>
-            <ol className="relative border-l border-border pl-8 sm:pl-10">
+            <ol className="relative border-l-2 border-primary/20 pl-8 sm:pl-10">
               {TIMELINE.map((t, i) => (
                 <li key={t.year} className="relative pb-10 last:pb-0">
-                  <span className="absolute top-1 -left-[2.3rem] grid h-6 w-6 place-items-center rounded-full border border-border bg-card sm:-left-[3.05rem]">
+                  <span className="absolute top-1 -left-[2.35rem] grid h-7 w-7 place-items-center rounded-full border border-primary/30 bg-card shadow-soft sm:-left-[3.15rem]">
                     <span className="h-2.5 w-2.5 rounded-full bg-[image:var(--gradient-brand)]" />
                   </span>
                   <Reveal delay={i * 80}>
-                    <div className="lift-hover rounded-3xl border border-border bg-card p-7">
+                    <div className="lift-hover rounded-[1.75rem] border border-border/80 bg-card p-7 shadow-soft">
                       <span className="font-display text-sm font-semibold tracking-[0.14em] text-primary uppercase">
                         {t.year}
                       </span>
-                      <h3 className="mt-2 font-display text-xl font-semibold">{t.title}</h3>
+                      <h3 className="mt-2 font-display text-xl font-semibold tracking-tight">{t.title}</h3>
                       <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{t.body}</p>
                     </div>
                   </Reveal>
@@ -273,7 +281,8 @@ function About() {
       </section>
 
       {/* ETHOS */}
-      <section className="relative overflow-hidden bg-surface py-20 sm:py-28">
+      <section className="relative overflow-hidden bg-surface section-pad">
+        <div className="noise-overlay" aria-hidden="true" />
         <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
           <Reveal>
             <SectionHeading
@@ -285,14 +294,14 @@ function About() {
           <div className="mt-14 grid gap-5 lg:grid-cols-3">
             {PILLARS.map((p, i) => (
               <Reveal key={p.title} delay={i * 90}>
-                <article className="lift-hover flex h-full flex-col rounded-3xl border border-border bg-card p-8">
-                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-accent text-primary">
+                <article className="lift-hover flex h-full flex-col rounded-[1.75rem] border border-border/80 bg-card p-8 shadow-soft">
+                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-[image:var(--gradient-brand)] text-primary-foreground shadow-soft">
                     <p.icon className="h-6 w-6" />
                   </span>
                   <span className="mt-6 text-xs tracking-[0.14em] text-muted-foreground uppercase">
                     {p.eyebrow}
                   </span>
-                  <h3 className="mt-2 font-display text-xl leading-snug font-semibold">
+                  <h3 className="mt-2 font-display text-xl leading-snug font-semibold tracking-tight">
                     {p.title}
                   </h3>
                   <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
@@ -306,17 +315,18 @@ function About() {
       {/* CTA */}
       <section className="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
         <Reveal>
-          <div className="relative overflow-hidden rounded-[2rem] bg-ink px-6 py-16 text-center text-ink-foreground sm:px-12">
-            <div className="bg-mesh pointer-events-none absolute inset-0 opacity-30" aria-hidden="true" />
+          <div className="relative overflow-hidden rounded-[2.25rem] bg-ink px-6 py-16 text-center text-ink-foreground shadow-lift ring-1 ring-white/10 sm:px-12 sm:py-20">
+            <div className="bg-mesh pointer-events-none absolute inset-0 opacity-40" aria-hidden="true" />
+            <div className="glow-orb left-1/2 top-0 h-64 w-64 -translate-x-1/2 opacity-35" aria-hidden="true" />
             <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-6">
-              <h2 className="text-3xl leading-tight font-semibold text-balance sm:text-4xl">
+              <h2 className="display-title text-3xl text-balance sm:text-4xl">
                 Join us as we build the future — one tech nation, hand in hand.
               </h2>
               <p className="opacity-80">
                 Embark on a journey of collaborative learning, where the pulse of technology beats
                 in unison with the passion of our community. Tech made easy.
               </p>
-              <Button asChild variant="warm" size="xl" className="rounded-full">
+              <Button asChild variant="warm" size="xl" className="rounded-full bg-white text-white">
                 <Link to="/contact">
                   Become a member
                   <ArrowRight />
