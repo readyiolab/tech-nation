@@ -5,6 +5,9 @@ import viteReact from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
+// Vercel sets VERCEL=1. Ubuntu/PM2 uses node-server output.
+const nitroPreset = process.env.VERCEL ? "vercel" : "node-server";
+
 export default defineConfig({
   server: {
     port: 8080,
@@ -27,7 +30,7 @@ export default defineConfig({
     }),
     viteReact(),
     nitro({
-      preset: "node-server",
+      preset: nitroPreset,
     }),
   ],
 });
