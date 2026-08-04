@@ -86,7 +86,7 @@ function Services() {
       />
 
       {/* METRICS / COUNTERS */}
-      <section className="mx-auto w-full max-w-7xl px-4 sm:px-6">
+      <section className="page-container">
         <Reveal>
           <dl className="relative grid gap-px overflow-hidden rounded-[2.25rem] border border-white/10 bg-ink text-ink-foreground shadow-lift sm:grid-cols-2 lg:grid-cols-4">
             <div className="bg-mesh pointer-events-none absolute inset-0 opacity-35" aria-hidden="true" />
@@ -108,7 +108,7 @@ function Services() {
       </section>
 
       {/* ALTERNATING STORY SECTIONS */}
-      <section className="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
+      <section className="page-container section-pad">
         <Reveal>
           <SectionHeading
             eyebrow="How we help"
@@ -184,7 +184,7 @@ function Services() {
       <section className="relative overflow-hidden bg-surface section-pad">
         <div className="bg-halo pointer-events-none absolute inset-0" aria-hidden="true" />
         <div className="noise-overlay" aria-hidden="true" />
-        <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
+        <div className="relative page-container">
           <Reveal>
             <SectionHeading
               eyebrow="Full catalogue"
@@ -230,7 +230,7 @@ function Services() {
       </section>
 
       {/* PROCESS */}
-      <section className="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
+      <section className="page-container section-pad">
         <Reveal>
           <SectionHeading
             eyebrow="How it works"
@@ -260,8 +260,8 @@ function Services() {
       </section>
 
       {/* WHY CHOOSE */}
-      <section className="relative overflow-hidden bg-surface py-20 sm:py-28">
-        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6">
+      <section className="relative overflow-hidden bg-surface section-pad">
+        <div className="page-container">
           <Reveal>
             <SectionHeading
               eyebrow="Why choose us"
@@ -286,7 +286,7 @@ function Services() {
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
+      <section className="page-container section-pad">
         <Reveal>
           <SectionHeading
             eyebrow="Client stories"
@@ -300,7 +300,7 @@ function Services() {
       </section>
 
       {/* FAQ */}
-      <section className="mx-auto w-full max-w-7xl px-4 pb-20 sm:px-6 sm:pb-28">
+      <section className="page-container section-pad">
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <Reveal>
             <div className="lg:sticky lg:top-28">
@@ -340,7 +340,7 @@ function Services() {
       </section>
 
       {/* CTA */}
-      <section className="mx-auto w-full max-w-7xl px-4 pb-20 sm:px-6 sm:pb-28">
+      <section className="page-container section-pad">
         <Reveal>
           <div className="relative overflow-hidden rounded-[2.25rem] bg-ink px-6 py-16 text-center text-ink-foreground shadow-lift ring-1 ring-white/10 sm:px-12 sm:py-20">
             <div className="bg-mesh pointer-events-none absolute inset-0 opacity-40" aria-hidden="true" />

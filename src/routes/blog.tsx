@@ -73,7 +73,7 @@ function Blog() {
         crumb="Blog"
       />
 
-      <section className="mx-auto w-full max-w-7xl px-4 pb-20 sm:px-6 sm:pb-28">
+      <section className="page-container section-pad">
         {isLoading ? <p className="text-muted-foreground">Loading posts…</p> : null}
         {isError ? (
           <p className="text-muted-foreground">

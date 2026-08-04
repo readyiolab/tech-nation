@@ -55,7 +55,7 @@ function ServiceDetail() {
         crumb={service.title}
       />
 
-      <section className="mx-auto w-full max-w-7xl px-4 pb-20 sm:px-6 sm:pb-28">
+      <section className="page-container section-pad">
         <div className="grid gap-10 lg:grid-cols-[1.6fr_1fr]">
           <div className="flex flex-col gap-10">
             <Reveal>

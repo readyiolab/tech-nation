@@ -132,13 +132,13 @@ function Home() {
         <div className="noise-overlay hidden md:block" aria-hidden="true" />
         <div className="vignette" aria-hidden="true" />
 
-        <div className="relative mx-auto grid w-full max-w-7xl flex-1 items-center gap-8 px-5 pt-24 pb-10 sm:px-6 sm:pt-28 sm:pb-12 md:gap-10 md:pt-36 md:pb-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:pb-20">
-          <div className="relative z-10 flex w-full flex-col items-center gap-5 text-center md:items-start md:gap-6 md:text-left">
+        <div className="page-container relative grid w-full flex-1 items-center gap-8 pt-20 pb-8 sm:pt-24 sm:pb-10 md:gap-10 md:pt-36 md:pb-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:pb-20">
+          <div className="relative z-10 flex w-full flex-col items-start gap-4 text-left sm:gap-5 md:gap-6">
             <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-[0.68rem] font-semibold tracking-[0.18em] text-[var(--hero-signal)] uppercase backdrop-blur-sm">
               One Tech Nations
             </span>
 
-            <h1 className="display-title max-w-[20rem] text-[2.25rem] leading-[1.12] font-semibold text-balance text-[var(--hero-fg)] sm:max-w-md sm:text-[2.625rem] md:max-w-xl md:text-5xl md:leading-[1.08] lg:text-[3.4rem]">
+            <h1 className="display-title w-full max-w-xl text-[2.25rem] leading-[1.12] font-semibold text-balance text-[var(--hero-fg)] sm:text-[2.625rem] md:text-5xl md:leading-[1.08] lg:text-[3.4rem]">
               <span className="inline">IT solutions for </span>
               <RotatingText
                 texts={["AI", "Cybersecurity", "Training", "Cloud", "GRC"]}
@@ -154,12 +154,12 @@ function Home() {
               />
             </h1>
 
-            <p className="max-w-[22rem] text-[0.95rem] leading-relaxed text-[var(--hero-muted)] sm:max-w-md sm:text-base md:max-w-lg md:text-lg">
+            <p className="w-full max-w-lg text-[0.95rem] leading-relaxed text-[var(--hero-muted)] sm:text-base md:text-lg">
               Workshops, customized training, and a living knowledge base — built by practitioners,
               not a slide deck.
             </p>
 
-            <div className="flex w-full max-w-sm flex-col items-stretch gap-3 pt-1 sm:max-w-md md:max-w-none md:flex-row md:flex-wrap md:items-center">
+            <div className="flex w-full flex-col items-stretch gap-3 pt-1 md:flex-row md:flex-wrap md:items-center">
               <Button
                 asChild
                 size="xl"
@@ -188,7 +188,7 @@ function Home() {
               </button>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 pt-1 text-xs text-[var(--hero-muted)] sm:text-sm md:justify-start">
+            <div className="flex flex-wrap items-center justify-start gap-x-4 gap-y-2 pt-1 text-xs text-[var(--hero-muted)] sm:text-sm">
               {["Trusted company", "Innovative solutions", "Proven track record"].map((t) => (
                 <span key={t} className="inline-flex items-center gap-1.5">
                   <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-[var(--hero-signal)]" />
@@ -204,7 +204,7 @@ function Home() {
           </div>
         </div>
 
-        <div className="hero-marquee relative mt-auto border-y border-white/10 py-2.5 md:py-4">
+        <div className="hero-marquee relative mt-2 border-y border-white/10 py-2.5 md:mt-0 md:py-4">
           <ScrollVelocity
             texts={[
               "AI Integration  ·  Virtual Labs  ·  Cybersecurity  ·  GRC Advisory  ·  ",
@@ -223,7 +223,7 @@ function Home() {
       <section className="relative overflow-hidden section-pad bg-surface">
         <div className="bg-halo pointer-events-none absolute inset-0" aria-hidden="true" />
         <div className="noise-overlay" aria-hidden="true" />
-        <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
+        <div className="relative page-container">
           <div className="flex flex-col items-center text-center">
             <Eyebrow>Services we offer</Eyebrow>
             <ScrollFloat
@@ -307,7 +307,7 @@ function Home() {
       </section>
 
       {/* STATS / CTA BAND */}
-      <section className="mx-auto w-full max-w-7xl px-4 pt-10 sm:px-6 sm:pt-14">
+      <section className="page-container pt-10 sm:pt-14">
         <Reveal>
           <div className="relative overflow-hidden rounded-[2.25rem] bg-ink px-6 py-14 text-ink-foreground shadow-lift ring-1 ring-white/10 sm:px-12 sm:py-16">
             <div
@@ -350,7 +350,7 @@ function Home() {
         </Reveal>
       </section>
       {/* SPECIAL OFFERS */}
-      <section className="section-pad mx-auto w-full max-w-7xl px-4 sm:px-6">
+      <section className="section-pad page-container">
         <div className="flex flex-col items-center text-center">
           <Eyebrow>Special offers</Eyebrow>
           <ScrollFloat
@@ -446,7 +446,7 @@ function Home() {
       </section>
 
       {/* PROJECTS */}
-      <section className="section-pad mx-auto w-full max-w-7xl px-4 sm:px-6">
+      <section className="section-pad page-container">
         <Reveal>
           <div className="grid gap-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
             <div className="flex flex-col items-start text-left">
@@ -531,7 +531,7 @@ function Home() {
       {/* QUALITY SUPPORT */}
       <section className="relative overflow-hidden bg-surface section-pad">
         <div className="bg-halo pointer-events-none absolute inset-0 opacity-80" aria-hidden="true" />
-        <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
+        <div className="relative page-container">
           <Reveal>
             <div className="grid items-end gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:gap-12">
               <div className="flex flex-col items-start text-left">
@@ -618,7 +618,7 @@ function Home() {
       {/* BLOG */}
       <section className="relative overflow-hidden bg-surface section-pad">
         <div className="noise-overlay" aria-hidden="true" />
-        <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
+        <div className="relative page-container">
           <Reveal>
             <div className="grid gap-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
               <div className="flex flex-col items-start text-left">
@@ -696,7 +696,7 @@ function Home() {
       </section>
 
       {/* FINAL CTA */}
-      <section className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 sm:py-24">
+      <section className="page-container section-pad">
         <Reveal>
           <div className="relative overflow-hidden rounded-[2rem] border border-border/70 bg-card px-6 py-14 text-center shadow-soft sm:px-12 sm:py-16">
             <div

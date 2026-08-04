@@ -69,7 +69,7 @@ function About() {
       />
 
       {/* INTRO */}
-      <section className="mx-auto w-full max-w-7xl px-4 pb-20 sm:px-6 sm:pb-28">
+      <section className="page-container section-pad">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <Reveal>
             <div className="group relative">
@@ -122,7 +122,7 @@ function About() {
       </section>
 
       {/* COUNTERS */}
-      <section className="mx-auto w-full max-w-7xl px-4 sm:px-6">
+      <section className="page-container">
         <Reveal>
           <dl className="relative grid gap-px overflow-hidden rounded-[2.25rem] border border-white/10 bg-ink text-ink-foreground shadow-lift sm:grid-cols-2 lg:grid-cols-4">
             <div className="bg-mesh pointer-events-none absolute inset-0 opacity-35" aria-hidden="true" />
@@ -144,7 +144,7 @@ function About() {
       </section>
 
       {/* MISSION / VISION */}
-      <section className="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
+      <section className="page-container section-pad">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <Reveal>
             <div className="flex flex-col gap-6">
@@ -203,7 +203,7 @@ function About() {
       <section className="relative overflow-hidden bg-surface section-pad">
         <div className="bg-halo pointer-events-none absolute inset-0" aria-hidden="true" />
         <div className="noise-overlay" aria-hidden="true" />
-        <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
+        <div className="relative page-container">
           <Reveal>
             <SectionHeading
               eyebrow="Our values"
@@ -235,7 +235,7 @@ function About() {
       </section>
 
       {/* TIMELINE */}
-      <section className="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
+      <section className="page-container section-pad">
         <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
           <Reveal>
             <div className="lg:sticky lg:top-28">
@@ -283,7 +283,7 @@ function About() {
       {/* ETHOS */}
       <section className="relative overflow-hidden bg-surface section-pad">
         <div className="noise-overlay" aria-hidden="true" />
-        <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
+        <div className="relative page-container">
           <Reveal>
             <SectionHeading
               eyebrow="Our ethos"
@@ -313,7 +313,7 @@ function About() {
       </section>
 
       {/* CTA */}
-      <section className="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
+      <section className="page-container section-pad">
         <Reveal>
           <div className="relative overflow-hidden rounded-[2.25rem] bg-ink px-6 py-16 text-center text-ink-foreground shadow-lift ring-1 ring-white/10 sm:px-12 sm:py-20">
             <div className="bg-mesh pointer-events-none absolute inset-0 opacity-40" aria-hidden="true" />

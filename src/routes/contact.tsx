@@ -110,7 +110,7 @@ function Contact() {
       />
 
       {/* CONTACT CARDS */}
-      <section className="mx-auto w-full max-w-7xl px-4 sm:px-6">
+      <section className="page-container">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {CONTACT_CARDS.map((c, i) => {
             const inner = (
@@ -148,7 +148,7 @@ function Contact() {
       </section>
 
       {/* AI ASSISTANT ENTRY */}
-      <section className="mx-auto mt-14 w-full max-w-7xl px-4 sm:px-6">
+      <section className="page-container mt-14">
         <Reveal>
           <div className="glass-panel relative overflow-hidden rounded-[2rem] p-7 shadow-lift sm:p-9">
             <div className="bg-mesh pointer-events-none absolute inset-0 opacity-70" aria-hidden="true" />
@@ -193,7 +193,7 @@ function Contact() {
       </section>
 
       {/* FORM + SIDE */}
-      <section className="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
+      <section className="page-container section-pad">
         <div className="grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:gap-12">
           <Reveal>
             <form
@@ -364,7 +364,7 @@ function Contact() {
       </section>
 
       {/* FAQ */}
-      <section className="relative overflow-hidden bg-surface py-20 sm:py-28">
+      <section className="relative overflow-hidden bg-surface section-pad">
         <div className="bg-halo pointer-events-none absolute inset-0" aria-hidden="true" />
         <div className="relative mx-auto w-full max-w-4xl px-4 sm:px-6">
           <Reveal>

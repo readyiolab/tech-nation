@@ -92,7 +92,7 @@ export function Header() {
 
         <div
           className={cn(
-            "mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 transition-[height] duration-300 sm:px-6",
+            "page-container flex items-center justify-between gap-4 transition-[height] duration-300",
             scrolled ? "h-14 sm:h-16" : "h-16 sm:h-[4.25rem]",
           )}
         >

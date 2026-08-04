@@ -30,7 +30,7 @@ export function Footer() {
       <div className="bg-halo pointer-events-none absolute inset-x-0 top-0 h-80" aria-hidden="true" />
       <div className="noise-overlay opacity-[0.04]" aria-hidden="true" />
 
-      <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
+      <div className="relative page-container">
         {/* Newsletter band */}
         <div className="-mt-16 overflow-hidden rounded-[2.25rem] bg-ink px-6 py-12 text-ink-foreground shadow-lift ring-1 ring-white/10 sm:px-12 sm:py-16">
           <div className="relative grid gap-10 lg:grid-cols-[1.05fr_1fr] lg:items-center">
