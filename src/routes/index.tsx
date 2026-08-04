@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useRef } from "react";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -24,7 +23,6 @@ import CurvedLoop from "@/components/react-bits/CurvedLoop";
 import RotatingText from "@/components/react-bits/RotatingText";
 import ScrollFloat from "@/components/react-bits/ScrollFloat";
 import ScrollVelocity from "@/components/react-bits/ScrollVelocity";
-import VariableProximity from "@/components/react-bits/VariableProximity";
 import courseSoc from "@/assets/course-soc.jpg";
 import courseGrc from "@/assets/course-grc.jpg";
 import projectMedia from "@/assets/project-media.jpg";
@@ -70,7 +68,6 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const heroProximityRef = useRef<HTMLDivElement>(null);
   const offerImages = [courseSoc, courseGrc, courseSoc, courseGrc];
   const { data: blogRes } = useQuery({
     queryKey: ["blogs", "home"],
@@ -107,43 +104,41 @@ function Home() {
 
   return (
     <>
-      {/* HERO — Signal Night */}
-      <section className="hero-dark relative flex min-h-[100svh] flex-col overflow-hidden">
+      {/* HERO — Signal Night (mobile-first premium, desktop unchanged layout) */}
+      <section className="hero-dark relative flex min-h-0 flex-col overflow-hidden md:min-h-[100svh]">
         <div className="bg-hero-mesh pointer-events-none absolute inset-0" aria-hidden="true" />
+        {/* Heavy décor only on desktop for performance */}
         <div
-          className="glow-orb -top-40 left-[-15%] h-[32rem] w-[32rem] opacity-40"
+          className="glow-orb pointer-events-none absolute -top-40 left-[-15%] hidden h-[32rem] w-[32rem] opacity-40 md:block"
           aria-hidden="true"
         />
         <div
-          className="glow-orb-signal right-[-8%] top-[18%] h-[22rem] w-[22rem] [animation-delay:2.5s]"
+          className="glow-orb-signal pointer-events-none absolute top-[18%] right-[-8%] hidden h-[22rem] w-[22rem] md:block [animation-delay:2.5s]"
           aria-hidden="true"
         />
         <div
-          className="glow-orb bottom-[-10%] left-[35%] h-72 w-72 opacity-25 [animation-delay:5s]"
+          className="glow-orb pointer-events-none absolute bottom-[-10%] left-[35%] hidden h-72 w-72 opacity-25 md:block [animation-delay:5s]"
           aria-hidden="true"
         />
         <div
-          className="grid-lines-hero pointer-events-none absolute inset-0 opacity-50 [mask-image:radial-gradient(75%_65%_at_50%_30%,black,transparent)]"
+          className="grid-lines-hero pointer-events-none absolute inset-0 hidden opacity-50 md:block [mask-image:radial-gradient(75%_65%_at_50%_30%,black,transparent)]"
           aria-hidden="true"
         />
-        <div className="noise-overlay" aria-hidden="true" />
+        {/* Soft mobile glow only */}
+        <div
+          className="pointer-events-none absolute top-24 right-0 h-48 w-48 rounded-full bg-[var(--hero-signal)] opacity-20 blur-3xl md:hidden"
+          aria-hidden="true"
+        />
+        <div className="noise-overlay hidden md:block" aria-hidden="true" />
         <div className="vignette" aria-hidden="true" />
 
-        <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center gap-10 px-4 pt-28 pb-10 sm:px-6 sm:pt-36 sm:pb-16 lg:grid lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-10 lg:pb-20">
-          <div
-            ref={heroProximityRef}
-            className="relative z-10 flex flex-col items-start gap-5 sm:gap-6"
-          >
-            <VariableProximity
-              label="One Tech Nations"
-              className="font-display text-[2rem] leading-[1.05] font-semibold tracking-tight text-[var(--hero-fg)] sm:text-[2.75rem] lg:text-[3.15rem]"
-              fromFontVariationSettings="'wght' 500, 'opsz' 16"
-              toFontVariationSettings="'wght' 900, 'opsz' 40"
-              containerRef={heroProximityRef}
-              radius={120}
-              falloff="gaussian"
-            />
-            <h1 className="display-title max-w-xl text-[1.55rem] font-medium text-balance text-[var(--hero-fg)] sm:text-[1.85rem] lg:text-[2.35rem]">
+        <div className="relative mx-auto grid w-full max-w-7xl flex-1 items-center gap-8 px-5 pt-24 pb-10 sm:px-6 sm:pt-28 sm:pb-12 md:gap-10 md:pt-36 md:pb-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:pb-20">
+          <div className="relative z-10 flex w-full flex-col items-center gap-5 text-center md:items-start md:gap-6 md:text-left">
+            <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-[0.68rem] font-semibold tracking-[0.18em] text-[var(--hero-signal)] uppercase backdrop-blur-sm">
+              One Tech Nations
+            </span>
+
+            <h1 className="display-title max-w-[20rem] text-[2.25rem] leading-[1.12] font-semibold text-balance text-[var(--hero-fg)] sm:max-w-md sm:text-[2.625rem] md:max-w-xl md:text-5xl md:leading-[1.08] lg:text-[3.4rem]">
               <span className="inline">IT solutions for </span>
               <RotatingText
                 texts={["AI", "Cybersecurity", "Training", "Cloud", "GRC"]}
@@ -158,18 +153,17 @@ function Home() {
                 rotationInterval={2200}
               />
             </h1>
-            <BlurText
-              text="Workshops, customized training, and a living knowledge base — built by practitioners, not a slide deck."
-              delay={80}
-              animateBy="words"
-              direction="top"
-              className="max-w-md text-[0.95rem] leading-relaxed text-[var(--hero-muted)] sm:max-w-lg sm:text-lg"
-            />
-            <div className="flex w-full flex-wrap items-center gap-3 pt-1">
+
+            <p className="max-w-[22rem] text-[0.95rem] leading-relaxed text-[var(--hero-muted)] sm:max-w-md sm:text-base md:max-w-lg md:text-lg">
+              Workshops, customized training, and a living knowledge base — built by practitioners,
+              not a slide deck.
+            </p>
+
+            <div className="flex w-full max-w-sm flex-col items-stretch gap-3 pt-1 sm:max-w-md md:max-w-none md:flex-row md:flex-wrap md:items-center">
               <Button
                 asChild
                 size="xl"
-                className="min-h-12 rounded-full bg-white px-7 text-black hover:bg-white/90 hover:text-black sm:min-h-14"
+                className="h-12 w-full rounded-full bg-white px-7 text-black hover:bg-white/90 hover:text-black md:h-14 md:w-auto"
               >
                 <Link to="/services">
                   Explore services
@@ -180,7 +174,7 @@ function Home() {
                 asChild
                 variant="outline"
                 size="xl"
-                className="min-h-12 rounded-full border-[color-mix(in_oklab,var(--hero-fg)_22%,transparent)] bg-transparent px-7 text-[var(--hero-fg)] hover:border-[color-mix(in_oklab,var(--hero-signal)_50%,transparent)] hover:bg-[color-mix(in_oklab,var(--hero-fg)_8%,transparent)] hover:text-[var(--hero-fg)] sm:min-h-14"
+                className="hidden h-12 rounded-full border-white/25 bg-transparent px-7 text-white hover:border-white/45 hover:bg-white/5 hover:text-white md:inline-flex md:h-14"
               >
                 <Link to="/about">More about us</Link>
               </Button>
@@ -188,22 +182,29 @@ function Home() {
                 type="button"
                 onClick={() => openChat({ prefill: "What services do you offer?" })}
                 aria-label="Ask our AI assistant"
-                className="group grid h-12 w-12 place-items-center rounded-full border border-[color-mix(in_oklab,var(--hero-fg)_22%,transparent)] text-[var(--hero-muted)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[color-mix(in_oklab,var(--hero-signal)_45%,transparent)] hover:text-[var(--hero-signal)] sm:h-14 sm:w-14"
+                className="group hidden h-14 w-14 place-items-center rounded-full border border-white/25 text-[var(--hero-muted)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[color-mix(in_oklab,var(--hero-signal)_45%,transparent)] hover:text-[var(--hero-signal)] md:grid"
               >
                 <MessagesSquare className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
               </button>
             </div>
-            <p className="hidden text-sm text-[var(--hero-muted)] sm:block">
-              Trusted company · Innovative solutions · Proven track record
-            </p>
+
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 pt-1 text-xs text-[var(--hero-muted)] sm:text-sm md:justify-start">
+              {["Trusted company", "Innovative solutions", "Proven track record"].map((t) => (
+                <span key={t} className="inline-flex items-center gap-1.5">
+                  <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-[var(--hero-signal)]" />
+                  {t}
+                </span>
+              ))}
+            </div>
           </div>
 
-          <div className="relative z-10 w-full max-w-md self-center lg:max-w-none">
+          {/* Desktop carousel only — hidden below 768px */}
+          <div className="relative z-10 hidden w-full max-w-md self-center md:block lg:max-w-none">
             <HeroCarousel />
           </div>
         </div>
 
-        <div className="hero-marquee relative mt-auto border-y py-4 sm:py-5">
+        <div className="hero-marquee relative mt-auto border-y border-white/10 py-2.5 md:py-4">
           <ScrollVelocity
             texts={[
               "AI Integration  ·  Virtual Labs  ·  Cybersecurity  ·  GRC Advisory  ·  ",
@@ -212,8 +213,8 @@ function Home() {
             velocity={80}
             numCopies={4}
             className="text-[var(--hero-muted)]"
-            scrollerClassName="flex whitespace-nowrap font-display text-xl font-semibold tracking-tight text-[var(--hero-muted)] sm:text-3xl md:text-4xl md:leading-none"
-            parallaxClassName="parallax py-1"
+            scrollerClassName="flex whitespace-nowrap font-display text-xs font-medium tracking-wide text-white/40 uppercase sm:text-sm md:text-xl md:font-semibold md:tracking-tight md:normal-case md:text-[var(--hero-muted)] md:leading-none lg:text-3xl xl:text-4xl"
+            parallaxClassName="parallax py-0.5 md:py-1"
           />
         </div>
       </section>
