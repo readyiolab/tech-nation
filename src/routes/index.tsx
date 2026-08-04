@@ -4,7 +4,6 @@ import {
   ArrowRight,
   ArrowUpRight,
   CheckCircle2,
-  Clock,
   MessagesSquare,
   Zap,
 } from "lucide-react";
@@ -16,15 +15,13 @@ import { TestimonialCarousel } from "@/components/TestimonialCarousel";
 import { Eyebrow } from "@/components/SectionHeading";
 import { Button } from "@/components/ui/button";
 import { ICONS } from "@/components/icon-map";
-import { CORE_SERVICES, METRICS, OFFERS, POSTS, PROJECTS } from "@/data/site";
+import { CORE_SERVICES, METRICS, POSTS, PROJECTS } from "@/data/site";
 import { apiGet } from "@/lib/api";
 import BlurText from "@/components/react-bits/BlurText";
 import CurvedLoop from "@/components/react-bits/CurvedLoop";
 import RotatingText from "@/components/react-bits/RotatingText";
 import ScrollFloat from "@/components/react-bits/ScrollFloat";
 import ScrollVelocity from "@/components/react-bits/ScrollVelocity";
-import courseSoc from "@/assets/course-soc.jpg";
-import courseGrc from "@/assets/course-grc.jpg";
 import projectMedia from "@/assets/project-media.jpg";
 import projectGrc from "@/assets/project-grc.jpg";
 import projectRisk from "@/assets/project-risk.jpg";
@@ -68,7 +65,6 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const offerImages = [courseSoc, courseGrc, courseSoc, courseGrc];
   const { data: blogRes } = useQuery({
     queryKey: ["blogs", "home"],
     queryFn: () =>
@@ -105,7 +101,7 @@ function Home() {
   return (
     <>
       {/* HERO — Signal Night (mobile-first premium, desktop unchanged layout) */}
-      <section className="hero-dark relative flex min-h-0 flex-col overflow-hidden md:min-h-[100svh]">
+      <section className="hero-dark relative flex min-h-[100svh] flex-col overflow-hidden">
         <div className="bg-hero-mesh pointer-events-none absolute inset-0" aria-hidden="true" />
         {/* Heavy décor only on desktop for performance */}
         <div
@@ -132,7 +128,7 @@ function Home() {
         <div className="noise-overlay hidden md:block" aria-hidden="true" />
         <div className="vignette" aria-hidden="true" />
 
-        <div className="page-container relative grid w-full flex-1 items-center gap-8 pt-20 pb-8 sm:pt-24 sm:pb-10 md:gap-10 md:pt-36 md:pb-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:pb-20">
+        <div className="page-container relative grid w-full flex-1 items-center gap-8 pt-20 pb-6 sm:pt-24 sm:pb-8 md:gap-10 md:pt-36 md:pb-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:pb-20">
           <div className="relative z-10 flex w-full flex-col items-start gap-4 text-left sm:gap-5 md:gap-6">
             <span className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-[0.68rem] font-semibold tracking-[0.18em] text-[var(--hero-signal)] uppercase backdrop-blur-sm">
               One Tech Nations
@@ -159,15 +155,15 @@ function Home() {
               not a slide deck.
             </p>
 
-            <div className="flex w-full flex-col items-stretch gap-3 pt-1 md:flex-row md:flex-wrap md:items-center">
+            <div className="flex w-full flex-col items-start gap-3 pt-1 md:flex-row md:flex-wrap md:items-center">
               <Button
                 asChild
-                size="xl"
-                className="h-12 w-full rounded-full bg-white px-7 text-black hover:bg-white/90 hover:text-black md:h-14 md:w-auto"
+                size="sm"
+                className="h-10 w-auto rounded-full bg-white px-5 text-sm text-black hover:bg-white/90 hover:text-black md:h-14 md:px-9 md:text-base"
               >
                 <Link to="/services">
                   Explore services
-                  <ArrowRight />
+                  <ArrowRight className="size-4" />
                 </Link>
               </Button>
               <Button
@@ -204,7 +200,7 @@ function Home() {
           </div>
         </div>
 
-        <div className="hero-marquee relative mt-2 border-y border-white/10 py-2.5 md:mt-0 md:py-4">
+        <div className="hero-marquee relative mt-auto border-y border-white/10 py-2.5 md:py-4">
           <ScrollVelocity
             texts={[
               "AI Integration  ·  Virtual Labs  ·  Cybersecurity  ·  GRC Advisory  ·  ",
@@ -348,73 +344,6 @@ function Home() {
             </div>
           </div>
         </Reveal>
-      </section>
-      {/* SPECIAL OFFERS */}
-      <section className="section-pad page-container">
-        <div className="flex flex-col items-center text-center">
-          <Eyebrow>Special offers</Eyebrow>
-          <ScrollFloat
-            containerClassName="my-3 text-center"
-            textClassName="display-title font-display text-balance text-foreground"
-            scrollStart="top bottom-=10%"
-            scrollEnd="center center"
-            stagger={0.02}
-          >
-            Certification tracks at a discount
-          </ScrollFloat>
-          <BlurText
-            text="Career-grade programs with live cohorts, recorded sessions and placement support."
-            delay={70}
-            className="mx-auto max-w-2xl justify-center text-base leading-relaxed text-muted-foreground sm:text-lg"
-          />
-        </div>
-        <div className="mt-14 grid gap-6 sm:grid-cols-2">
-          {OFFERS.map((o, i) => (
-            <Reveal key={o.slug} delay={i * 80}>
-              <article className="lift-hover group flex h-full flex-col overflow-hidden rounded-[1.85rem] border border-border/80 bg-card shadow-soft">
-                <div className="relative aspect-[16/9] overflow-hidden bg-surface-2">
-                  <img
-                    src={offerImages[i]}
-                    alt={`${o.title} programme visual`}
-                    loading="lazy"
-                    width={900}
-                    height={700}
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <span
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent"
-                    aria-hidden="true"
-                  />
-                  <span className="absolute top-4 left-4 rounded-full bg-card/95 px-3 py-1.5 text-xs font-semibold shadow-soft backdrop-blur">
-                    {o.badge}
-                  </span>
-                </div>
-                <div className="flex flex-1 flex-col p-7">
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <Clock className="h-3.5 w-3.5" />
-                    {o.period}
-                  </div>
-                  <h3 className="mt-3 font-display text-xl font-semibold tracking-tight">{o.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{o.blurb}</p>
-                  <ul className="mt-5 space-y-2 text-sm">
-                    {o.highlights.map((h) => (
-                      <li key={h} className="flex items-start gap-2">
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-teal" />
-                        <span className="text-muted-foreground">{h}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-7 flex flex-wrap items-center justify-between gap-3 border-t border-border/80 pt-5">
-                    <span className="font-display text-base font-semibold text-primary">{o.price}</span>
-                    <Button asChild size="sm" variant="outline" className="rounded-full">
-                      <Link to="/contact">Enroll now</Link>
-                    </Button>
-                  </div>
-                </div>
-              </article>
-            </Reveal>
-          ))}
-        </div>
       </section>
 
       {/* TESTIMONIALS */}
