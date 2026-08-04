@@ -151,18 +151,16 @@ export function Footer() {
         {/* Main grid */}
         <div className="grid gap-12 py-16 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
           <div className="max-w-sm">
-            <div className="flex items-center gap-3">
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-[image:var(--gradient-brand)] text-primary-foreground">
-                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden="true">
-                  <path
-                    d="M12 3.2 19 6v5.4c0 4.2-2.8 7.6-7 9.4-4.2-1.8-7-5.2-7-9.4V6l7-2.8Z"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-              <span className="font-display text-base font-semibold">{SITE.name}</span>
+            <div className="flex items-center">
+              <Link to="/" aria-label="One Tech Nations home">
+                <img
+                  src="/logo-tech.png"
+                  alt="One Tech Nations"
+                  width={160}
+                  height={160}
+                  className="h-14 w-auto object-contain sm:h-16"
+                />
+              </Link>
             </div>
             <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
               A hub connecting AI and cybersecurity enthusiasts to collaborate on the future of

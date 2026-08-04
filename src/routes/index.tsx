@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
+import { useRef } from "react";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -11,13 +12,19 @@ import {
 import { Reveal } from "@/components/Reveal";
 import { openChat } from "@/lib/chat-bus";
 import { Counter } from "@/components/Counter";
+import { HeroCarousel } from "@/components/HeroCarousel";
 import { TestimonialCarousel } from "@/components/TestimonialCarousel";
-import { Eyebrow, SectionHeading } from "@/components/SectionHeading";
+import { Eyebrow } from "@/components/SectionHeading";
 import { Button } from "@/components/ui/button";
 import { ICONS } from "@/components/icon-map";
 import { CORE_SERVICES, METRICS, OFFERS, POSTS, PROJECTS } from "@/data/site";
 import { apiGet } from "@/lib/api";
-import heroArt from "@/assets/hero-clean.png";
+import BlurText from "@/components/react-bits/BlurText";
+import CurvedLoop from "@/components/react-bits/CurvedLoop";
+import RotatingText from "@/components/react-bits/RotatingText";
+import ScrollFloat from "@/components/react-bits/ScrollFloat";
+import ScrollVelocity from "@/components/react-bits/ScrollVelocity";
+import VariableProximity from "@/components/react-bits/VariableProximity";
 import courseSoc from "@/assets/course-soc.jpg";
 import courseGrc from "@/assets/course-grc.jpg";
 import projectMedia from "@/assets/project-media.jpg";
@@ -62,17 +69,8 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const MARQUEE = [
-  "AI Integration Workshops",
-  "Customized Training",
-  "Cybersecurity Knowledge Base",
-  "Community Forums",
-  "Virtual Labs",
-  "GRC Advisory",
-  "Threat Modeling",
-];
-
 function Home() {
+  const heroProximityRef = useRef<HTMLDivElement>(null);
   const offerImages = [courseSoc, courseGrc, courseSoc, courseGrc];
   const { data: blogRes } = useQuery({
     queryKey: ["blogs", "home"],
@@ -92,119 +90,131 @@ function Home() {
   const homePosts =
     blogRes?.data?.length
       ? blogRes.data.map((p) => ({
-          slug: p.slug,
-          title: p.title,
-          excerpt: p.excerpt || "",
-          category: p.category || "Blog",
-          date: p.published_at
-            ? new Date(p.published_at).toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-              })
-            : "",
-          fromApi: true as const,
-        }))
+        slug: p.slug,
+        title: p.title,
+        excerpt: p.excerpt || "",
+        category: p.category || "Blog",
+        date: p.published_at
+          ? new Date(p.published_at).toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+          })
+          : "",
+        fromApi: true as const,
+      }))
       : POSTS.map((p) => ({ ...p, fromApi: false as const }));
 
   return (
     <>
-      {/* HERO */}
-      <section className="relative overflow-hidden pt-28 pb-12 sm:pt-40 sm:pb-24">
-        <div className="bg-mesh pointer-events-none absolute inset-0" aria-hidden="true" />
-        <div className="glow-orb -top-32 left-[-10%] h-[28rem] w-[28rem]" aria-hidden="true" />
+      {/* HERO — Signal Night */}
+      <section className="hero-dark relative flex min-h-[100svh] flex-col overflow-hidden">
+        <div className="bg-hero-mesh pointer-events-none absolute inset-0" aria-hidden="true" />
         <div
-          className="glow-orb right-[-5%] bottom-20 h-80 w-80 opacity-20 [animation-delay:3s]"
+          className="glow-orb -top-40 left-[-15%] h-[32rem] w-[32rem] opacity-40"
           aria-hidden="true"
         />
         <div
-          className="grid-lines pointer-events-none absolute inset-0 opacity-40 [mask-image:radial-gradient(70%_60%_at_50%_20%,black,transparent)]"
+          className="glow-orb-signal right-[-8%] top-[18%] h-[22rem] w-[22rem] [animation-delay:2.5s]"
+          aria-hidden="true"
+        />
+        <div
+          className="glow-orb bottom-[-10%] left-[35%] h-72 w-72 opacity-25 [animation-delay:5s]"
+          aria-hidden="true"
+        />
+        <div
+          className="grid-lines-hero pointer-events-none absolute inset-0 opacity-50 [mask-image:radial-gradient(75%_65%_at_50%_30%,black,transparent)]"
           aria-hidden="true"
         />
         <div className="noise-overlay" aria-hidden="true" />
         <div className="vignette" aria-hidden="true" />
 
-        <div className="relative mx-auto grid w-full max-w-7xl items-center gap-14 px-4 sm:px-6 lg:grid-cols-[1.08fr_0.92fr]">
-          <div className="animate-rise flex flex-col items-start gap-6">
-            <Eyebrow>One Tech Nations</Eyebrow>
-            <h1 className="display-title text-[2.15rem] text-balance sm:text-5xl lg:text-[3.85rem]">
-              We specialize in <span className="text-gradient">IT solutions</span> that make AI and
-              security work together.
+        <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center gap-10 px-4 pt-28 pb-10 sm:px-6 sm:pt-36 sm:pb-16 lg:grid lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-10 lg:pb-20">
+          <div
+            ref={heroProximityRef}
+            className="relative z-10 flex flex-col items-start gap-5 sm:gap-6"
+          >
+            <VariableProximity
+              label="One Tech Nations"
+              className="font-display text-[2rem] leading-[1.05] font-semibold tracking-tight text-[var(--hero-fg)] sm:text-[2.75rem] lg:text-[3.15rem]"
+              fromFontVariationSettings="'wght' 500, 'opsz' 16"
+              toFontVariationSettings="'wght' 900, 'opsz' 40"
+              containerRef={heroProximityRef}
+              radius={120}
+              falloff="gaussian"
+            />
+            <h1 className="display-title max-w-xl text-[1.55rem] font-medium text-balance text-[var(--hero-fg)] sm:text-[1.85rem] lg:text-[2.35rem]">
+              <span className="inline">IT solutions for </span>
+              <RotatingText
+                texts={["AI", "Cybersecurity", "Training", "Cloud", "GRC"]}
+                mainClassName="inline-flex overflow-hidden rounded-md bg-white px-2.5 py-0.5 text-black align-baseline"
+                staggerFrom="last"
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                exit={{ y: "-120%" }}
+                staggerDuration={0.025}
+                splitLevelClassName="overflow-hidden"
+                transition={{ type: "spring", damping: 30, stiffness: 400 }}
+                rotationInterval={2200}
+              />
             </h1>
-            <p className="max-w-xl text-base leading-relaxed text-muted-foreground sm:text-xl">
-              AI and cybersecurity integration workshops, customized training programs, and a living
-              knowledge base — built by a community of practitioners, not a slide deck.
-            </p>
-            <div className="flex flex-wrap items-center gap-3">
-              <Button asChild variant="hero" size="xl" className="rounded-full">
+            <BlurText
+              text="Workshops, customized training, and a living knowledge base — built by practitioners, not a slide deck."
+              delay={80}
+              animateBy="words"
+              direction="top"
+              className="max-w-md text-[0.95rem] leading-relaxed text-[var(--hero-muted)] sm:max-w-lg sm:text-lg"
+            />
+            <div className="flex w-full flex-wrap items-center gap-3 pt-1">
+              <Button
+                asChild
+                size="xl"
+                className="min-h-12 rounded-full bg-white px-7 text-black hover:bg-white/90 hover:text-black sm:min-h-14"
+              >
                 <Link to="/services">
                   Explore services
                   <ArrowRight />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="xl" className="rounded-full bg-card/70 backdrop-blur">
+              <Button
+                asChild
+                variant="outline"
+                size="xl"
+                className="min-h-12 rounded-full border-[color-mix(in_oklab,var(--hero-fg)_22%,transparent)] bg-transparent px-7 text-[var(--hero-fg)] hover:border-[color-mix(in_oklab,var(--hero-signal)_50%,transparent)] hover:bg-[color-mix(in_oklab,var(--hero-fg)_8%,transparent)] hover:text-[var(--hero-fg)] sm:min-h-14"
+              >
                 <Link to="/about">More about us</Link>
               </Button>
               <button
                 type="button"
                 onClick={() => openChat({ prefill: "What services do you offer?" })}
-                className="group inline-flex items-center gap-2 rounded-full border border-border/80 bg-card/80 px-5 py-3 text-sm font-medium text-muted-foreground shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary"
+                aria-label="Ask our AI assistant"
+                className="group grid h-12 w-12 place-items-center rounded-full border border-[color-mix(in_oklab,var(--hero-fg)_22%,transparent)] text-[var(--hero-muted)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[color-mix(in_oklab,var(--hero-signal)_45%,transparent)] hover:text-[var(--hero-signal)] sm:h-14 sm:w-14"
               >
-                <MessagesSquare className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
-                Ask our AI assistant
+                <MessagesSquare className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
               </button>
             </div>
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-2 text-sm text-muted-foreground">
-              {["Trusted company", "Innovative solutions", "Proven track record"].map((t) => (
-                <span key={t} className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-teal" />
-                  {t}
-                </span>
-              ))}
-            </div>
+            <p className="hidden text-sm text-[var(--hero-muted)] sm:block">
+              Trusted company · Innovative solutions · Proven track record
+            </p>
           </div>
 
-          <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-            <div
-              className="glow-orb inset-8 h-auto w-auto opacity-35 blur-3xl"
-              aria-hidden="true"
-            />
-            <div className="glass-panel relative overflow-hidden rounded-[2.25rem] p-6 shadow-lift sm:p-9">
-              <div className="noise-overlay opacity-[0.05]" aria-hidden="true" />
-              <img
-                src={heroArt}
-                alt="Simple glass shield illustration representing secure, AI-driven systems"
-                width={1024}
-                height={1024}
-                className="animate-float relative mx-auto w-full max-w-sm drop-shadow-2xl"
-              />
-              <div className="relative mt-6 grid grid-cols-2 gap-3 text-center">
-                <div className="rounded-2xl border border-border/70 bg-background/80 px-4 py-3.5 shadow-soft backdrop-blur">
-                  <p className="font-display text-lg font-semibold text-primary">24/7</p>
-                  <p className="text-xs text-muted-foreground">Lab access</p>
-                </div>
-                <div className="rounded-2xl border border-border/70 bg-background/80 px-4 py-3.5 shadow-soft backdrop-blur">
-                  <p className="font-display text-lg font-semibold text-primary">1:1</p>
-                  <p className="text-xs text-muted-foreground">Mentorship</p>
-                </div>
-              </div>
-            </div>
+          <div className="relative z-10 w-full max-w-md self-center lg:max-w-none">
+            <HeroCarousel />
           </div>
         </div>
 
-        {/* marquee */}
-        <div className="relative mt-16 overflow-hidden border-y border-border/80 bg-card/70 py-4 backdrop-blur-xl">
-          <div className="animate-marquee flex w-max gap-10 pr-10">
-            {[...MARQUEE, ...MARQUEE].map((item, i) => (
-              <span
-                key={i}
-                className="flex items-center gap-3 text-sm font-medium tracking-wide text-muted-foreground whitespace-nowrap"
-              >
-                <span className="h-1.5 w-1.5 rounded-full bg-[image:var(--gradient-brand)]" />
-                {item}
-              </span>
-            ))}
-          </div>
+        <div className="hero-marquee relative mt-auto border-y py-4 sm:py-5">
+          <ScrollVelocity
+            texts={[
+              "AI Integration  ·  Virtual Labs  ·  Cybersecurity  ·  GRC Advisory  ·  ",
+              "Custom Training  ·  Threat Modeling  ·  Community Forums  ·  ",
+            ]}
+            velocity={80}
+            numCopies={4}
+            className="text-[var(--hero-muted)]"
+            scrollerClassName="flex whitespace-nowrap font-display text-xl font-semibold tracking-tight text-[var(--hero-muted)] sm:text-3xl md:text-4xl md:leading-none"
+            parallaxClassName="parallax py-1"
+          />
         </div>
       </section>
 
@@ -213,18 +223,26 @@ function Home() {
         <div className="bg-halo pointer-events-none absolute inset-0" aria-hidden="true" />
         <div className="noise-overlay" aria-hidden="true" />
         <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Services we offer"
-              title={
-                <>
-                  Providing complete professional{" "}
-                  <span className="text-gradient">IT services</span>
-                </>
-              }
-              subtitle="A comprehensive analysis of your existing IT setup. Through thorough assessments we identify areas for improvement, surface potential hazards, and uncover innovative opportunities."
+          <div className="flex flex-col items-center text-center">
+            <Eyebrow>Services we offer</Eyebrow>
+            <ScrollFloat
+              containerClassName="my-3 text-center"
+              textClassName="display-title font-display text-balance text-foreground"
+              animationDuration={1}
+              ease="power2.out"
+              scrollStart="top bottom-=10%"
+              scrollEnd="center center"
+              stagger={0.025}
+            >
+              Professional IT services
+            </ScrollFloat>
+            <BlurText
+              text="A comprehensive analysis of your existing IT setup. Through thorough assessments we identify areas for improvement, surface potential hazards, and uncover innovative opportunities."
+              delay={60}
+              animateBy="words"
+              className="mx-auto max-w-2xl justify-center text-base leading-relaxed text-muted-foreground sm:text-lg"
             />
-          </Reveal>
+          </div>
 
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {CORE_SERVICES.map((s, i) => {
@@ -275,9 +293,20 @@ function Home() {
         </div>
       </section>
 
+      <section className="overflow-hidden bg-ink text-ink-foreground">
+        <CurvedLoop
+          marqueeText="AI ✦ Cybersecurity ✦ Training ✦ Virtual Labs ✦ GRC ✦ IT Consulting ✦"
+          speed={2.2}
+          curveAmount={280}
+          direction="left"
+          interactive
+          className="fill-white/90"
+          containerClassName="py-8 sm:py-10"
+        />
+      </section>
 
       {/* STATS / CTA BAND */}
-      <section className="mx-auto w-full max-w-7xl px-4 sm:px-6">
+      <section className="mx-auto w-full max-w-7xl px-4 pt-10 sm:px-6 sm:pt-14">
         <Reveal>
           <div className="relative overflow-hidden rounded-[2.25rem] bg-ink px-6 py-14 text-ink-foreground shadow-lift ring-1 ring-white/10 sm:px-12 sm:py-16">
             <div
@@ -288,9 +317,12 @@ function Home() {
             <div className="noise-overlay opacity-20 mix-blend-soft-light" aria-hidden="true" />
             <div className="relative grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center">
               <div>
-                <h2 className="display-title text-3xl text-balance sm:text-4xl">
-                  Are you ready to grow your IT solution?
-                </h2>
+                <BlurText
+                  text="Are you ready to grow your IT solution?"
+                  delay={90}
+                  animateBy="words"
+                  className="display-title text-3xl text-balance sm:text-4xl"
+                />
                 <p className="mt-4 max-w-xl text-base leading-relaxed opacity-80 sm:text-lg">
                   Discover growth opportunities, enhance efficiency, and stay ahead in the rapidly
                   evolving tech landscape. Let's fuel your success together.
@@ -318,17 +350,23 @@ function Home() {
       </section>
       {/* SPECIAL OFFERS */}
       <section className="section-pad mx-auto w-full max-w-7xl px-4 sm:px-6">
-        <Reveal>
-          <SectionHeading
-            eyebrow="Special offers"
-            title={
-              <>
-                Certification tracks at a <span className="text-gradient">discount</span>
-              </>
-            }
-            subtitle="Career-grade programs with live cohorts, recorded sessions and placement support."
+        <div className="flex flex-col items-center text-center">
+          <Eyebrow>Special offers</Eyebrow>
+          <ScrollFloat
+            containerClassName="my-3 text-center"
+            textClassName="display-title font-display text-balance text-foreground"
+            scrollStart="top bottom-=10%"
+            scrollEnd="center center"
+            stagger={0.02}
+          >
+            Certification tracks at a discount
+          </ScrollFloat>
+          <BlurText
+            text="Career-grade programs with live cohorts, recorded sessions and placement support."
+            delay={70}
+            className="mx-auto max-w-2xl justify-center text-base leading-relaxed text-muted-foreground sm:text-lg"
           />
-        </Reveal>
+        </div>
         <div className="mt-14 grid gap-6 sm:grid-cols-2">
           {OFFERS.map((o, i) => (
             <Reveal key={o.slug} delay={i * 80}>
@@ -383,13 +421,23 @@ function Home() {
         <div className="bg-halo pointer-events-none absolute inset-0" aria-hidden="true" />
         <div className="noise-overlay" aria-hidden="true" />
         <div className="relative mx-auto w-full max-w-5xl px-4 sm:px-6">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Our testimonial"
-              title="What our clients are saying"
-              subtitle="Practitioners who went from theory to shift-ready."
+          <div className="flex flex-col items-center text-center">
+            <Eyebrow>Our testimonial</Eyebrow>
+            <ScrollFloat
+              containerClassName="my-3 text-center"
+              textClassName="display-title font-display text-balance text-foreground"
+              scrollStart="top bottom-=10%"
+              scrollEnd="center center"
+              stagger={0.025}
+            >
+              What our clients are saying
+            </ScrollFloat>
+            <BlurText
+              text="Practitioners who went from theory to shift-ready."
+              delay={80}
+              className="justify-center text-base leading-relaxed text-muted-foreground sm:text-lg"
             />
-          </Reveal>
+          </div>
           <div className="mt-14">
             <TestimonialCarousel />
           </div>
@@ -400,16 +448,23 @@ function Home() {
       <section className="section-pad mx-auto w-full max-w-7xl px-4 sm:px-6">
         <Reveal>
           <div className="grid gap-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
-            <SectionHeading
-              align="left"
-              eyebrow="Our completed projects"
-              title={
-                <>
-                  Recently completed <span className="text-gradient">projects</span>
-                </>
-              }
-              subtitle="Selected engagements across media, GRC tooling and cyber risk."
-            />
+            <div className="flex flex-col items-start text-left">
+              <Eyebrow>Our completed projects</Eyebrow>
+              <ScrollFloat
+                containerClassName="my-3 text-left"
+                textClassName="display-title font-display text-balance text-foreground"
+                scrollStart="top bottom-=10%"
+                scrollEnd="center center"
+                stagger={0.02}
+              >
+                Recently completed projects
+              </ScrollFloat>
+              <BlurText
+                text="Selected engagements across media, GRC tooling and cyber risk."
+                delay={70}
+                className="max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg"
+              />
+            </div>
             <Button asChild variant="outline" className="rounded-full">
               <Link to="/contact">
                 Start a project
@@ -422,9 +477,8 @@ function Home() {
           {PROJECTS.map((p, i) => (
             <Reveal key={p.no} delay={i * 90}>
               <article
-                className={`group relative grid overflow-hidden rounded-[2rem] border border-border/70 bg-card shadow-soft transition-all duration-500 hover:border-primary/30 hover:shadow-lift lg:grid-cols-2 ${
-                  i % 2 === 1 ? "lg:[&>div:first-child]:order-2" : ""
-                }`}
+                className={`group relative grid overflow-hidden rounded-[2rem] border border-border/70 bg-card shadow-soft transition-all duration-500 hover:border-primary/30 hover:shadow-lift lg:grid-cols-2 ${i % 2 === 1 ? "lg:[&>div:first-child]:order-2" : ""
+                  }`}
               >
                 <div className="relative aspect-[16/10] overflow-hidden bg-surface-2 lg:aspect-auto lg:min-h-[280px]">
                   <img
@@ -479,17 +533,23 @@ function Home() {
         <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
           <Reveal>
             <div className="grid items-end gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:gap-12">
-              <SectionHeading
-                align="left"
-                eyebrow="Quality support"
-                title={
-                  <>
-                    Improve quality with strategic{" "}
-                    <span className="text-gradient">integration</span> of technology.
-                  </>
-                }
-                subtitle="IT services customized for your agency — from first assessment to continuous improvement."
-              />
+              <div className="flex flex-col items-start text-left">
+                <Eyebrow>Quality support</Eyebrow>
+                <ScrollFloat
+                  containerClassName="my-3 text-left"
+                  textClassName="display-title font-display text-balance text-foreground"
+                  scrollStart="top bottom-=10%"
+                  scrollEnd="center center"
+                  stagger={0.02}
+                >
+                  Improve quality with strategic integration
+                </ScrollFloat>
+                <BlurText
+                  text="IT services customized for your agency — from first assessment to continuous improvement."
+                  delay={70}
+                  className="max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg"
+                />
+              </div>
               <div className="flex lg:justify-end">
                 <Button asChild variant="hero" size="lg" className="rounded-full">
                   <Link to="/services">
@@ -560,12 +620,23 @@ function Home() {
         <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
           <Reveal>
             <div className="grid gap-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
-              <SectionHeading
-                align="left"
-                eyebrow="News post"
-                title="Latest updates and news"
-                subtitle="Perspectives on IT, cybersecurity and applied AI."
-              />
+              <div className="flex flex-col items-start text-left">
+                <Eyebrow>News post</Eyebrow>
+                <ScrollFloat
+                  containerClassName="my-3 text-left"
+                  textClassName="display-title font-display text-balance text-foreground"
+                  scrollStart="top bottom-=10%"
+                  scrollEnd="center center"
+                  stagger={0.02}
+                >
+                  Latest updates and news
+                </ScrollFloat>
+                <BlurText
+                  text="Perspectives on IT, cybersecurity and applied AI."
+                  delay={70}
+                  className="max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg"
+                />
+              </div>
               <Button asChild variant="outline" className="rounded-full">
                 <Link to="/blog">
                   All articles
@@ -633,13 +704,20 @@ function Home() {
             />
             <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-5">
               <Eyebrow>Ready to transform your business?</Eyebrow>
-              <h2 className="display-title text-3xl text-balance sm:text-4xl md:text-[2.75rem]">
-                Let's build your <span className="text-gradient">secure tech future</span> together.
-              </h2>
-              <p className="max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-                We're dedicated to providing excellent services. Tell us where you are and we'll map
-                the next step.
-              </p>
+              <ScrollFloat
+                containerClassName="my-2 text-center"
+                textClassName="display-title font-display text-balance text-foreground"
+                scrollStart="top bottom-=5%"
+                scrollEnd="center center"
+                stagger={0.02}
+              >
+                Build your secure tech future
+              </ScrollFloat>
+              <BlurText
+                text="We're dedicated to providing excellent services. Tell us where you are and we'll map the next step."
+                delay={70}
+                className="max-w-xl justify-center text-base leading-relaxed text-muted-foreground sm:text-lg"
+              />
               <div className="mt-2 flex flex-wrap justify-center gap-3">
                 <Button asChild variant="hero" size="xl" className="rounded-full">
                   <Link to="/contact">

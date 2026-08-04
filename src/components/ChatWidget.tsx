@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { MessageSquare, X, Send, Sparkles } from "lucide-react";
+import { X, Send, Bot } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 import { OPEN_CHAT_EVENT, type OpenChatDetail } from "@/lib/chat-bus";
@@ -13,6 +13,11 @@ const QUICK = [
   "How do virtual labs work?",
   "How can I contact you?",
 ];
+
+const WELCOME_POPUP =
+  "Hi! I'm Nova 🤖 — your AI guide. Need help with services, trainings, or labs? Ask me anything!";
+
+const POPUP_SESSION_KEY = "otn-chat-welcome-seen";
 
 function answer(input: string): string {
   const q = input.toLowerCase();
@@ -33,13 +38,35 @@ function answer(input: string): string {
   return "Good question. I can help with services, trainings, virtual labs, pricing and getting in touch. For anything deeper, the contact form reaches a human on our team quickly.";
 }
 
+function RobotAvatar({ className }: { className?: string }) {
+  return (
+    <span
+      className={cn(
+        "relative grid place-items-center overflow-hidden rounded-2xl bg-[image:var(--gradient-brand)] text-primary-foreground shadow-soft",
+        className,
+      )}
+    >
+      <span
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.35),transparent_55%)]"
+        aria-hidden="true"
+      />
+      <Bot className="relative h-[55%] w-[55%]" strokeWidth={2.2} aria-hidden="true" />
+      <span
+        className="absolute right-1.5 bottom-1.5 h-2 w-2 rounded-full bg-emerald-400 ring-2 ring-white/80"
+        aria-hidden="true"
+      />
+    </span>
+  );
+}
+
 export function ChatWidget() {
   const [open, setOpen] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const [value, setValue] = useState("");
   const [msgs, setMsgs] = useState<Msg[]>([
     {
       role: "bot",
-      text: "Hi, I'm Nova — the One Tech Nations assistant. Ask me about our services, trainings or labs.",
+      text: "Hi, I'm Nova — your robot assistant at One Tech Nations. Ask me about our services, trainings or labs.",
     },
   ]);
   const [typing, setTyping] = useState(false);
@@ -53,6 +80,7 @@ export function ChatWidget() {
   useEffect(() => {
     const onOpen = (e: Event) => {
       const detail = (e as CustomEvent<OpenChatDetail>).detail ?? {};
+      setShowPopup(false);
       setOpen(true);
       if (detail.prefill) setValue(detail.prefill);
       window.setTimeout(() => inputRef.current?.focus(), 120);
@@ -60,6 +88,35 @@ export function ChatWidget() {
     window.addEventListener(OPEN_CHAT_EVENT, onOpen);
     return () => window.removeEventListener(OPEN_CHAT_EVENT, onOpen);
   }, []);
+
+  // Welcome popup when visitor lands
+  useEffect(() => {
+    try {
+      if (sessionStorage.getItem(POPUP_SESSION_KEY)) return;
+    } catch {
+      /* ignore */
+    }
+
+    const showTimer = window.setTimeout(() => {
+      setShowPopup(true);
+      try {
+        sessionStorage.setItem(POPUP_SESSION_KEY, "1");
+      } catch {
+        /* ignore */
+      }
+    }, 1800);
+
+    const hideTimer = window.setTimeout(() => setShowPopup(false), 12000);
+
+    return () => {
+      window.clearTimeout(showTimer);
+      window.clearTimeout(hideTimer);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (open) setShowPopup(false);
+  }, [open]);
 
   const persistLead = (transcript: Msg[]) => {
     if (transcript.length < 3) return;
@@ -93,34 +150,90 @@ export function ChatWidget() {
     }, 700);
   };
 
+  const openChat = () => {
+    setShowPopup(false);
+    setOpen(true);
+    window.setTimeout(() => inputRef.current?.focus(), 120);
+  };
+
   return (
     <>
+      {/* Welcome popup bubble */}
+      {showPopup && !open ? (
+        <div
+          className="animate-rise fixed right-4 bottom-[calc(5.25rem+env(safe-area-inset-bottom))] z-50 w-[min(18.5rem,calc(100vw-5.5rem))] sm:right-6 sm:bottom-[6.5rem]"
+          role="dialog"
+          aria-label="Chat welcome message"
+        >
+          <div className="relative rounded-2xl rounded-br-md border border-border/80 bg-card px-4 py-3.5 shadow-lift">
+            <button
+              type="button"
+              onClick={() => setShowPopup(false)}
+              aria-label="Dismiss welcome message"
+              className="absolute top-2 right-2 grid h-7 w-7 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+            <div className="flex gap-3 pr-5">
+              <RobotAvatar className="h-10 w-10 shrink-0" />
+              <div className="min-w-0">
+                <p className="font-display text-sm font-semibold text-foreground">Nova</p>
+                <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{WELCOME_POPUP}</p>
+                <button
+                  type="button"
+                  onClick={openChat}
+                  className="mt-2.5 text-xs font-semibold text-primary hover:underline"
+                >
+                  Chat with me →
+                </button>
+              </div>
+            </div>
+            <span
+              className="absolute -bottom-2 right-6 h-4 w-4 rotate-45 border-r border-b border-border/80 bg-card"
+              aria-hidden="true"
+            />
+          </div>
+        </div>
+      ) : null}
+
+      {/* Robot launcher */}
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-label={open ? "Close assistant" : "Open assistant"}
+        onClick={() => (open ? setOpen(false) : openChat())}
+        aria-label={open ? "Close assistant" : "Open robot assistant"}
         className={cn(
-          "fixed right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-50 grid h-14 w-14 place-items-center rounded-full bg-[image:var(--gradient-brand)] text-primary-foreground shadow-[var(--shadow-glow)] ring-4 ring-primary/15 transition-transform duration-300 hover:scale-105 sm:right-6 sm:bottom-6",
-          !open && "animate-pulse-ring",
+          "fixed right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-50 transition-transform duration-300 hover:scale-105 sm:right-6 sm:bottom-6",
+          !open && "animate-pulse-ring rounded-2xl",
         )}
       >
-        {open ? <X className="h-6 w-6" /> : <MessageSquare className="h-6 w-6" />}
+        {open ? (
+          <span className="grid h-14 w-14 place-items-center rounded-2xl bg-ink text-ink-foreground shadow-lift">
+            <X className="h-6 w-6" />
+          </span>
+        ) : (
+          <RobotAvatar className="h-14 w-14 shadow-[var(--shadow-glow)] ring-4 ring-primary/15" />
+        )}
       </button>
 
       {open ? (
         <div className="animate-rise fixed right-4 bottom-[calc(4.5rem+env(safe-area-inset-bottom))] z-50 flex h-[min(30rem,calc(100dvh-8.5rem))] w-[min(22rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-[1.75rem] border border-border/80 bg-card shadow-lift ring-1 ring-primary/10 sm:right-6 sm:bottom-24 sm:h-[30rem]">
           <div className="relative flex items-center gap-3 overflow-hidden border-b border-white/10 bg-[image:var(--gradient-brand)] px-4 py-3.5 text-primary-foreground">
-            <div className="noise-overlay opacity-20 mix-blend-soft-light" aria-hidden="true" />
-            <span className="relative grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white/15 ring-1 ring-white/25 backdrop-blur">
-              <Sparkles className="h-4.5 w-4.5" />
-            </span>
+            <RobotAvatar className="relative h-10 w-10 shrink-0 ring-1 ring-white/30" />
             <div className="relative min-w-0">
-              <p className="truncate font-display text-sm font-semibold">Nova Assistant</p>
+              <p className="truncate font-display text-sm font-semibold">Nova · Robot Assistant</p>
               <p className="flex items-center gap-1.5 text-xs opacity-85">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-300" />
-                Typically replies instantly
+                Online · replies instantly
               </p>
             </div>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              aria-label="Close chat"
+              className="relative ml-auto grid h-8 w-8 place-items-center rounded-lg text-white/80 transition-colors hover:bg-white/15 hover:text-white"
+            >
+              <X className="h-4 w-4" />
+            </button>
           </div>
 
           <div className="flex-1 space-y-3 overflow-y-auto bg-surface px-4 py-4">
@@ -128,28 +241,39 @@ export function ChatWidget() {
               <div
                 key={i}
                 className={cn(
-                  "max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed",
-                  m.role === "bot"
-                    ? "rounded-tl-sm border border-border bg-card text-foreground"
-                    : "ml-auto rounded-tr-sm bg-primary text-primary-foreground",
+                  "flex gap-2",
+                  m.role === "user" ? "justify-end" : "items-end",
                 )}
               >
-                {m.text}
+                {m.role === "bot" ? <RobotAvatar className="mb-0.5 h-7 w-7 shrink-0" /> : null}
+                <div
+                  className={cn(
+                    "max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed",
+                    m.role === "bot"
+                      ? "rounded-bl-sm border border-border bg-card text-foreground"
+                      : "rounded-br-sm bg-primary text-primary-foreground",
+                  )}
+                >
+                  {m.text}
+                </div>
               </div>
             ))}
             {typing ? (
-              <div className="flex w-16 gap-1 rounded-2xl rounded-tl-sm border border-border bg-card px-3.5 py-3">
-                {[0, 1, 2].map((d) => (
-                  <span
-                    key={d}
-                    className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground"
-                    style={{ animationDelay: `${d * 120}ms` }}
-                  />
-                ))}
+              <div className="flex items-end gap-2">
+                <RobotAvatar className="h-7 w-7 shrink-0" />
+                <div className="flex w-16 gap-1 rounded-2xl rounded-bl-sm border border-border bg-card px-3.5 py-3">
+                  {[0, 1, 2].map((d) => (
+                    <span
+                      key={d}
+                      className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground"
+                      style={{ animationDelay: `${d * 120}ms` }}
+                    />
+                  ))}
+                </div>
               </div>
             ) : null}
             {msgs.length === 1 ? (
-              <div className="flex flex-wrap gap-2 pt-1">
+              <div className="flex flex-wrap gap-2 pt-1 pl-9">
                 {QUICK.map((q) => (
                   <button
                     key={q}
@@ -176,7 +300,7 @@ export function ChatWidget() {
               ref={inputRef}
               value={value}
               onChange={(e) => setValue(e.target.value)}
-              placeholder="Ask a question…"
+              placeholder="Ask Nova…"
               aria-label="Message"
               className="h-10 min-w-0 flex-1 rounded-full border border-border bg-surface px-4 text-sm outline-none focus:border-primary/50"
             />
@@ -189,10 +313,13 @@ export function ChatWidget() {
             </button>
           </form>
 
-
           <p className="border-t border-border bg-card px-4 pb-3 text-center text-xs text-muted-foreground">
             Need a human?{" "}
-            <Link to="/contact" onClick={() => setOpen(false)} className="font-medium text-primary hover:underline">
+            <Link
+              to="/contact"
+              onClick={() => setOpen(false)}
+              className="font-medium text-primary hover:underline"
+            >
               Submit a request
             </Link>
           </p>
